@@ -18,6 +18,7 @@ import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, generateColorScale, getContrast
 import { ExportPaletteDialog } from "@/components/home/export-palette-dialog"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { CustomPicker } from "./custom-picker"
+import { useUser, useClerk } from "@clerk/nextjs"
 
 interface ManualColorPickerProps {
   color: string
@@ -25,6 +26,8 @@ interface ManualColorPickerProps {
 }
 
 export default function ManualColorPicker({ color, onChange }: ManualColorPickerProps) {
+  const { isSignedIn } = useUser()
+  const clerk = useClerk()
   const [hexValue, setHexValue] = useState(color)
   const [isExportOpen, setIsExportOpen] = useState(false)
   const rgb = hexToRgb(color) || { r: 0, g: 0, b: 0 }
@@ -57,6 +60,11 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
   }
 
   const handleExport = () => {
+    if (!isSignedIn) {
+      toast.error("Please sign in to export your palette")
+      clerk.openSignIn()
+      return
+    }
     setIsExportOpen(true)
   }
 
