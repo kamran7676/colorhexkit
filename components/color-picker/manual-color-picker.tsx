@@ -15,6 +15,7 @@ import {
 import { Copy, Grid3X3, Download } from "lucide-react"
 import { toast } from "sonner"
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, generateColorScale, getContrastRatio } from "@/lib/color-utils"
+import { ExportPaletteDialog } from "@/components/home/export-palette-dialog"
 
 interface ManualColorPickerProps {
   color: string
@@ -23,6 +24,7 @@ interface ManualColorPickerProps {
 
 export default function ManualColorPicker({ color, onChange }: ManualColorPickerProps) {
   const [hexValue, setHexValue] = useState(color)
+  const [isExportOpen, setIsExportOpen] = useState(false)
   const rgb = hexToRgb(color) || { r: 0, g: 0, b: 0 }
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b)
 
@@ -53,19 +55,7 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
   }
 
   const handleExport = () => {
-    const scale = generateColorScale(color);
-    const palette = scale.reduce((acc, shade) => {
-      acc[shade.label] = shade.hex;
-      return acc;
-    }, {} as Record<number, string>);
-
-    // Add original color as "base" or "500" if it matches
-    // But strictly speaking, the user just wants the scale exported often. 
-    // Let's stick to the generated scale.
-
-    const json = JSON.stringify(palette, null, 2);
-    navigator.clipboard.writeText(json);
-    toast.success("Palette copied to clipboard as JSON");
+    setIsExportOpen(true)
   }
 
   const getContrastColor = (hex: string) => {
@@ -290,6 +280,11 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
           </div>
         </div>
       </div>
+      <ExportPaletteDialog
+        open={isExportOpen}
+        onOpenChange={setIsExportOpen}
+        colors={generateColorScale(color).map(c => c.hex)}
+      />
     </Card >
   )
 }
