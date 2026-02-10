@@ -16,6 +16,8 @@ import { Copy, Grid3X3, Download } from "lucide-react"
 import { toast } from "sonner"
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, generateColorScale, getContrastRatio } from "@/lib/color-utils"
 import { ExportPaletteDialog } from "@/components/home/export-palette-dialog"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { CustomPicker } from "./custom-picker"
 
 interface ManualColorPickerProps {
   color: string
@@ -102,22 +104,22 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
                 </div>
               </div>
 
-              {/* Native Picker */}
+              {/* Custom Picker Popover (Replacing Native Picker) */}
               <div className="space-y-2">
-                <Label htmlFor="color-input" className="text-sm font-medium text-muted-foreground">Native Picker</Label>
-                <div className="relative h-11 w-full rounded-md overflow-hidden border border-border/50 shadow-sm cursor-pointer hover:ring-2 ring-primary/20 transition-all">
-                  <input
-                    id="color-input"
-                    type="color"
-                    value={color}
-                    onChange={(e) => onChange(e.target.value)}
-                    className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] cursor-pointer p-0 m-0 opacity-0 z-10"
-                  />
-                  <div className="w-full h-full flex items-center justify-center gap-2 bg-background/50 backdrop-blur-sm">
-                    <div className="w-5 h-5 rounded-full border border-white/20 shadow-sm" style={{ backgroundColor: color }} />
-                    <span className="text-sm font-medium">Open System Picker</span>
-                  </div>
-                </div>
+                <Label htmlFor="color-trigger" className="text-sm font-medium text-muted-foreground">Custom Picker</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <div className="relative h-11 w-full rounded-md overflow-hidden border border-border/50 shadow-sm cursor-pointer hover:ring-2 ring-primary/20 transition-all">
+                      <div className="w-full h-full flex items-center justify-center gap-2 bg-background/50 backdrop-blur-sm">
+                        <div className="w-5 h-5 rounded-full border border-white/20 shadow-sm" style={{ backgroundColor: color }} />
+                        <span className="text-sm font-medium">Open Picker</span>
+                      </div>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0 border-none bg-transparent shadow-none" side="bottom" align="start">
+                    <CustomPicker color={color} onChange={onChange} />
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
 
