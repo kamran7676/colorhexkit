@@ -4,7 +4,17 @@ import { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, generateColorScale } from "@/lib/color-utils"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Copy, Grid3X3, Download } from "lucide-react"
+import { toast } from "sonner"
+import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, generateColorScale, getContrastRatio } from "@/lib/color-utils"
 
 interface ManualColorPickerProps {
   color: string
@@ -40,6 +50,29 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
 
     const newRgb = hslToRgb(newHsl.h, newHsl.s, newHsl.l)
     onChange(rgbToHex(newRgb.r, newRgb.g, newRgb.b))
+  }
+
+  const handleExport = () => {
+    const scale = generateColorScale(color);
+    const palette = scale.reduce((acc, shade) => {
+      acc[shade.label] = shade.hex;
+      return acc;
+    }, {} as Record<number, string>);
+
+    // Add original color as "base" or "500" if it matches
+    // But strictly speaking, the user just wants the scale exported often. 
+    // Let's stick to the generated scale.
+
+    const json = JSON.stringify(palette, null, 2);
+    navigator.clipboard.writeText(json);
+    toast.success("Palette copied to clipboard as JSON");
+  }
+
+  const getContrastColor = (hex: string) => {
+    const rgb = hexToRgb(hex);
+    if (!rgb) return "#000000";
+    const whiteContrast = getContrastRatio(rgb, { r: 255, g: 255, b: 255 });
+    return whiteContrast >= 4.5 ? "#FFFFFF" : "#000000";
   }
 
   return (
@@ -121,6 +154,69 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Actions Row */}
+            <div className="flex items-center gap-3 pt-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="flex-1 gap-2 bg-background/50 border-white/10 hover:bg-white/5">
+                    <Grid3X3 className="w-4 h-4" />
+                    Contrast Grid
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl bg-stone-950/90 backdrop-blur-xl border-white/10">
+                  <DialogHeader>
+                    <DialogTitle>Contrast Analysis</DialogTitle>
+                  </DialogHeader>
+                  <div className="mt-4 space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                      Accessibility contrast ratios against black and white text. WCAG AA requires 4.5:1 for normal text.
+                    </p>
+                    <div className="grid gap-2 max-h-[60vh] overflow-y-auto pr-2">
+                      {generateColorScale(color).map((shade) => {
+                        const rgb = hexToRgb(shade.hex) || { r: 0, g: 0, b: 0 };
+                        const whiteRatio = getContrastRatio(rgb, { r: 255, g: 255, b: 255 });
+                        const blackRatio = getContrastRatio(rgb, { r: 0, g: 0, b: 0 });
+
+                        return (
+                          <div key={shade.label} className="grid grid-cols-[80px_1fr_1fr] gap-4 items-center p-2 rounded-lg border border-white/5 bg-white/5">
+                            <div className="flex flex-col items-center gap-1">
+                              <div className="w-8 h-8 rounded-md shadow-sm border border-white/10" style={{ backgroundColor: shade.hex }} />
+                              <span className="text-xs font-mono opacity-70">{shade.label}</span>
+                            </div>
+
+                            <div className="flex items-center justify-between p-2 rounded bg-black/20">
+                              <span className="text-xs text-muted-foreground">vs White</span>
+                              <div className="flex flex-col items-end">
+                                <span className="font-mono font-medium text-sm">{whiteRatio.toFixed(2)}</span>
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded ${whiteRatio >= 4.5 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                                  {whiteRatio >= 4.5 ? 'PASS' : 'FAIL'}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-between p-2 rounded bg-white/5">
+                              <span className="text-xs text-muted-foreground">vs Black</span>
+                              <div className="flex flex-col items-end">
+                                <span className="font-mono font-medium text-sm">{blackRatio.toFixed(2)}</span>
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded ${blackRatio >= 4.5 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                                  {blackRatio >= 4.5 ? 'PASS' : 'FAIL'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+
+              <Button onClick={handleExport} variant="outline" className="flex-1 gap-2 bg-background/50 border-white/10 hover:bg-white/5">
+                <Download className="w-4 h-4" />
+                Export
+              </Button>
             </div>
           </div>
 
