@@ -14,7 +14,7 @@ interface ExportPaletteDialogProps {
     colors: string[]
 }
 
-type ExportFormat = "css" | "code" | "svg" | "png"
+type ExportFormat = "css" | "json" | "svg" | "png"
 
 export function ExportPaletteDialog({ open, onOpenChange, colors }: ExportPaletteDialogProps) {
     const [expandedSection, setExpandedSection] = useState<ExportFormat | null>(null)
@@ -145,18 +145,18 @@ ${colors.map((c, i) => `  <rect x="${i * 100}" y="0" width="100" height="100" fi
                         </AnimatePresence>
                     </div>
 
-                    {/* Code Section */}
+                    {/* JSON Section */}
                     <div className="border-b border-neutral-100 dark:border-white/5 pb-2">
                         <button
-                            onClick={() => toggleSection("code")}
+                            onClick={() => toggleSection("json")}
                             className="w-full flex items-center justify-between py-3 text-left font-medium hover:bg-neutral-50 dark:hover:bg-white/5 rounded-lg px-2 transition-colors"
                         >
-                            <span>Code</span>
-                            {expandedSection === "code" ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                            <span>JSON</span>
+                            {expandedSection === "json" ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                         </button>
 
                         <AnimatePresence>
-                            {expandedSection === "code" && (
+                            {expandedSection === "json" && (
                                 <motion.div
                                     initial={{ height: 0, opacity: 0 }}
                                     animate={{ height: "auto", opacity: 1 }}
