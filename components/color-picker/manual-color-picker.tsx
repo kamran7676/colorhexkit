@@ -152,7 +152,7 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
             <div className="flex items-center gap-3 pt-2">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" className="flex-1 gap-2 bg-background/50 border-white/10 hover:bg-white/5">
+                  <Button variant="outline" className="flex-1 gap-2 bg-[#E3E3E3]/80 hover:bg-[#E3E3E3] text-black shadow-[0_2px_4px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.16)] dark:bg-gradient-to-b dark:from-[#201E25] dark:to-[#323137] dark:hover:from-[#2a2830] dark:hover:to-[#3c3b42] dark:text-white dark:border-[#3E3C42] dark:shadow-[0_2px_4px_#0D0D0D] transition-all">
                     <Grid3X3 className="w-4 h-4" />
                     Contrast Grid
                   </Button>
@@ -205,7 +205,7 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
                 </DialogContent>
               </Dialog>
 
-              <Button onClick={handleExport} variant="outline" className="flex-1 gap-2 bg-background/50 border-white/10 hover:bg-white/5">
+              <Button onClick={handleExport} variant="outline" className="flex-1 gap-2 bg-[#E3E3E3]/80 hover:bg-[#E3E3E3] text-black shadow-[0_2px_4px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.16)] dark:bg-gradient-to-b dark:from-[#201E25] dark:to-[#323137] dark:hover:from-[#2a2830] dark:hover:to-[#3c3b42] dark:text-white dark:border-[#3E3C42] dark:shadow-[0_2px_4px_#0D0D0D] transition-all">
                 <Download className="w-4 h-4" />
                 Export
               </Button>
