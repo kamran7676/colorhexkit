@@ -27,10 +27,10 @@ export function hexToRgb(hex: string): RGB | null {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16),
+    }
     : null;
 }
 
@@ -475,4 +475,33 @@ export function getColorName(hex: string): string {
   if (hue < 345) return "Pink";
 
   return "Unknown";
+}
+
+export function generateColorScale(hex: string): { label: number; hex: string }[] {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return [];
+
+  const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+  // Tailwind-like lightness values for 50-950 scale
+  // 50 is very light (closest to white), 950 is very dark (closest to black)
+  const lightnessMap = [
+    { label: 50, l: 95 },
+    { label: 100, l: 90 },
+    { label: 200, l: 80 },
+    { label: 300, l: 70 },
+    { label: 400, l: 60 },
+    { label: 500, l: 50 },  // Base color logic might need adjustment if input isn't exactly 50% L, but fixed scale simplifies consistent UI
+    { label: 600, l: 40 },
+    { label: 700, l: 30 },
+    { label: 800, l: 20 },
+  ];
+
+  return lightnessMap.map((shade) => {
+    const newRgb = hslToRgb(hsl.h, hsl.s, shade.l);
+    return {
+      label: shade.label,
+      hex: rgbToHex(newRgb.r, newRgb.g, newRgb.b),
+    };
+  });
 }

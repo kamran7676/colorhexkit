@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from "@/lib/color-utils"
+import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, generateColorScale } from "@/lib/color-utils"
 
 interface ManualColorPickerProps {
   color: string
@@ -97,6 +97,31 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
                 </div>
               </div>
             </div>
+
+
+            {/* Color Shades Palette */}
+            <div>
+              <Label className="text-base font-medium text-muted-foreground mb-3 block">Color Scale</Label>
+              <div className="flex flex-wrap gap-2">
+                {generateColorScale(color).map((shade) => (
+                  <div
+                    key={shade.label}
+                    className="flex-1 min-w-[3rem] aspect-square rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm border border-black/5"
+                    style={{ backgroundColor: shade.hex }}
+                  >
+                    <span
+                      className={`text-[10px] font-mono font-medium ${shade.label >= 500 ? 'text-white/90' : 'text-black/70'
+                        }`}
+                    >
+                      {shade.label}
+                    </span>
+                    {shade.label === 500 && (
+                      <div className="w-1 h-1 rounded-full bg-white/50" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Right Column: Sliders */}
@@ -169,6 +194,6 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
           </div>
         </div>
       </div>
-    </Card>
+    </Card >
   )
 }
