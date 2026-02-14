@@ -4,6 +4,7 @@ import { Inter, Poppins, Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import SmoothScrolling from "@/components/smooth-scrolling";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -66,7 +67,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <SmoothScrolling>{children}</SmoothScrolling>
             <Toaster />
           </ThemeProvider>
         </body>
