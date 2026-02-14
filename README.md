@@ -22,6 +22,8 @@ A professional, feature-rich color picker and analysis tool built with Next.js 1
 - **UI Components**: Radix UI (via shadcn/ui)
 - **Icons**: Lucide React
 - **Notifications**: Sonner
+- **State Management**: Zustand
+- **Smooth Scrolling**: Lenis
 
 ## Features
 
