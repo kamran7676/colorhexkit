@@ -20,14 +20,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CustomPicker } from "./custom-picker"
 import { useUser, useClerk } from "@clerk/nextjs"
 
-interface ManualColorPickerProps {
-  color: string
-  onChange: (color: string) => void
-}
+import { useColorStore } from "@/hooks/use-color-store"
 
-export default function ManualColorPicker({ color, onChange }: ManualColorPickerProps) {
+export default function ManualColorPicker() {
   const { isSignedIn } = useUser()
   const clerk = useClerk()
+  const { color, setColor } = useColorStore()
   const [hexValue, setHexValue] = useState(color)
   const [isExportOpen, setIsExportOpen] = useState(false)
   const rgb = hexToRgb(color) || { r: 0, g: 0, b: 0 }
@@ -40,13 +38,13 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
   const handleHexChange = (value: string) => {
     setHexValue(value)
     if (/^#[0-9A-F]{6}$/i.test(value)) {
-      onChange(value)
+      setColor(value)
     }
   }
 
   const handleRgbChange = (channel: "r" | "g" | "b", value: number) => {
     const newRgb = { ...rgb, [channel]: Math.max(0, Math.min(255, value)) }
-    onChange(rgbToHex(newRgb.r, newRgb.g, newRgb.b))
+    setColor(rgbToHex(newRgb.r, newRgb.g, newRgb.b))
   }
 
   const handleHslChange = (channel: "h" | "s" | "l", value: number) => {
@@ -56,7 +54,7 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
     if (channel === "l") newHsl.l = Math.max(0, Math.min(100, value))
 
     const newRgb = hslToRgb(newHsl.h, newHsl.s, newHsl.l)
-    onChange(rgbToHex(newRgb.r, newRgb.g, newRgb.b))
+    setColor(rgbToHex(newRgb.r, newRgb.g, newRgb.b))
   }
 
   const handleExport = () => {
@@ -125,7 +123,7 @@ export default function ManualColorPicker({ color, onChange }: ManualColorPicker
                     </div>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 border-none bg-transparent shadow-none" side="bottom" align="start">
-                    <CustomPicker color={color} onChange={onChange} />
+                    <CustomPicker color={color} onChange={setColor} />
                   </PopoverContent>
                 </Popover>
               </div>

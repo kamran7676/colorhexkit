@@ -34,11 +34,10 @@ import {
 } from "@/lib/color-utils";
 import { toast } from "sonner";
 
-interface ColorAnalysisProps {
-  color: string;
-}
+import { useColorStore } from "@/hooks/use-color-store"
 
-export default function ColorAnalysis({ color }: ColorAnalysisProps) {
+export default function ColorAnalysis() {
+  const { color } = useColorStore()
   const [copiedValue, setCopiedValue] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("formats");
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -10,8 +9,6 @@ import ManualColorPicker from "@/components/color-picker/manual-color-picker";
 import ColorAnalysis from "@/components/color-picker/color-analysis";
 
 export default function PickerPage() {
-  const [selectedColor, setSelectedColor] = useState("#2596be");
-
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -86,21 +83,18 @@ export default function PickerPage() {
                 </div>
 
                 <TabsContent value="image" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-                  <ImageColorPicker onColorSelect={setSelectedColor} />
+                  <ImageColorPicker />
                 </TabsContent>
 
                 <TabsContent value="manual" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-                  <ManualColorPicker
-                    color={selectedColor}
-                    onChange={setSelectedColor}
-                  />
+                  <ManualColorPicker />
                 </TabsContent>
               </Tabs>
             </motion.div>
 
             {/* Analysis Section */}
             <motion.div variants={itemVariants}>
-              <ColorAnalysis color={selectedColor} />
+              <ColorAnalysis />
             </motion.div>
           </motion.div>
         </main>

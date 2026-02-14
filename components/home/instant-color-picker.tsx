@@ -12,12 +12,18 @@ import { ExportPaletteDialog } from "@/components/home/export-palette-dialog"
 import { useUser, useClerk } from "@clerk/nextjs"
 import { motion, useScroll, useTransform } from "framer-motion"
 
+import { useColorStore } from "@/hooks/use-color-store"
+
 export function InstantColorPicker() {
   const { isSignedIn } = useUser()
   const clerk = useClerk()
-  const [selectedColor, setSelectedColor] = useState("#2596be");
-  const [image, setImage] = useState<string | null>("/image/demo.jpg");
-  const [extractedColors, setExtractedColors] = useState<string[]>([]);
+  const { color, setColor, image, setImage, palette, setPalette } = useColorStore()
+  // Use store instead of local state
+  const selectedColor = color;
+  const setSelectedColor = setColor;
+  const extractedColors = palette;
+  const setExtractedColors = setPalette;
+
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -61,11 +67,11 @@ export function InstantColorPicker() {
     if (colors.length > 0) {
       setSelectedColor(colors[0]);
     }
-  }, []);
+  }, [setExtractedColors, setSelectedColor]);
 
   const handleColorSelect = useCallback((color: string) => {
     setSelectedColor(color);
-  }, []);
+  }, [setSelectedColor]);
 
   return (
     <div className="w-full max-w-5xl mx-auto font-sans text-neutral-800 dark:text-neutral-200">

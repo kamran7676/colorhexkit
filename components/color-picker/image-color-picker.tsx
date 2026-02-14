@@ -8,15 +8,20 @@ import { extractColorsFromImage, rgbToHex, getColorName, getContrastRatio, hexTo
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface ImageColorPickerProps {
-  onColorSelect: (color: string) => void;
-}
+import { useColorStore } from "@/hooks/use-color-store"
 
-export default function ImageColorPicker({
-  onColorSelect,
-}: ImageColorPickerProps) {
-  const [image, setImage] = useState<string | null>(null);
-  const [extractedColors, setExtractedColors] = useState<string[]>([]);
+export default function ImageColorPicker() {
+  const {
+    color, setColor,
+    image, setImage,
+    palette, setPalette
+  } = useColorStore()
+
+  // Map store state to local names for compatibility or direct usage
+  const onColorSelect = setColor;
+  const extractedColors = palette;
+  const setExtractedColors = setPalette;
+
   const [hoveredColor, setHoveredColor] = useState<string | null>(null);
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -77,10 +82,8 @@ export default function ImageColorPicker({
       onColorSelect(color);
 
       // Update Extracted Palette to prioritize the picked color
-      setExtractedColors(prev => {
-        const newColors = [color, ...prev.filter(c => c !== color)];
-        return newColors.slice(0, 8); // Keep max 8 colors
-      });
+      const newColors = [color, ...extractedColors.filter(c => c !== color)].slice(0, 8);
+      setExtractedColors(newColors);
 
       toast.success(`Color ${color} selected`);
     }
