@@ -97,7 +97,7 @@ export function InstantColorPicker() {
         {/* Resize Icon */}
         <button
           onClick={() => setIsFullScreen(true)}
-          className="absolute top-4 right-4 md:top-6 md:-right-6 translate-x-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shadow-lg cursor-pointer hover:scale-110 transition-transform hidden md:flex"
+          className="absolute top-4 right-4 md:top-6 md:-right-6 translate-x-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full items-center justify-center text-black shadow-lg cursor-pointer hover:scale-110 transition-transform hidden md:flex"
         >
           <Maximize2 className="w-5 h-5" />
         </button>

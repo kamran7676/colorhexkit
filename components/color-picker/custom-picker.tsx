@@ -110,7 +110,12 @@ export function CustomPicker({ color, onChange }: CustomPickerProps) {
             {/* Hue Slider */}
             <div className="space-y-2">
                 <div className="h-4 rounded-full w-full relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-cyan-500 via-blue-500 via-magenta-500 to-red-500" />
+                    <div
+                        className="absolute inset-0"
+                        style={{
+                            background: 'linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)'
+                        }}
+                    />
                     <input
                         type="range"
                         min="0"
