@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Upload, Link as LinkIcon, Monitor, Image as ImageIcon, Clipboard, Search, AlertCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -53,8 +52,8 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
         return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.isMobile=true&viewport.deviceScaleFactor=1`;
     };
 
-    const handleUrlSubmit = async (type: "website" | "image") => {
-        if (!urlInput) {
+    const processUrl = async (url: string, type: "website" | "image") => {
+        if (!url) {
             toast.error("Please enter a URL");
             return;
         }
@@ -67,18 +66,17 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
                 const img = new Image();
                 img.crossOrigin = "Anonymous";
                 img.onload = () => {
-                    onImageSelect(urlInput);
+                    onImageSelect(url);
                     onOpenChange(false);
                     setIsLoading(false);
                 };
                 img.onerror = () => {
                     // If direct load fails (CORS or other error), fallback to screenshot service
-                    // This acts as a proxy to bypass CORS for images
                     toast.message("Direct load failed. Attempting to capture...", {
                         description: "Using screenshot service to bypass CORS."
                     });
 
-                    const fallbackUrl = getScreenshotUrl(urlInput);
+                    const fallbackUrl = getScreenshotUrl(url);
                     const fallbackImg = new Image();
                     fallbackImg.crossOrigin = "Anonymous";
                     fallbackImg.onload = () => {
@@ -93,10 +91,10 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
                     };
                     fallbackImg.src = fallbackUrl;
                 };
-                img.src = urlInput;
+                img.src = url;
             } else {
                 // Website URL
-                let formattedUrl = urlInput;
+                let formattedUrl = url;
                 if (!formattedUrl.startsWith("http://") && !formattedUrl.startsWith("https://")) {
                     formattedUrl = "https://" + formattedUrl;
                 }
@@ -128,6 +126,10 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
         }
     };
 
+    const handleUrlSubmit = async (type: "website" | "image") => {
+        await processUrl(urlInput, type);
+    };
+
     const handleScreenCapture = async () => {
         try {
             const stream = await navigator.mediaDevices.getDisplayMedia({
@@ -135,8 +137,11 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
                 audio: false
             });
             const track = stream.getVideoTracks()[0];
-            // @ts-ignore - ImageCapture is experimental and might not be in all TS libs
-            const imageCapture = new (window as any).ImageCapture(track);
+            if (!window.ImageCapture) {
+                toast.error("Screen capture is not supported in this browser");
+                return;
+            }
+            const imageCapture = new window.ImageCapture(track);
             const bitmap = await imageCapture.grabFrame();
 
             // Convert bitmap to data URL
@@ -182,6 +187,19 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
 
     const handlePasteClipboard = async () => {
         try {
+            // 1. Try reading text first (to catch image URLs)
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text && (text.startsWith("http://") || text.startsWith("https://"))) {
+                    // It looks like a URL, try to process it as an image
+                    await processUrl(text, "image");
+                    return;
+                }
+            } catch (err) {
+                // Ignore errors reading text (e.g. if clipboard has image data only)
+            }
+
+            // 2. Try reading clipboard items (for image data)
             const items = await navigator.clipboard.read();
             for (const item of items) {
                 if (item.types.some(type => type.startsWith("image/"))) {
@@ -190,6 +208,7 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
                     reader.onload = (event) => {
                         onImageSelect(event.target?.result as string);
                         onOpenChange(false);
+                        toast.success("Image pasted from clipboard");
                     };
                     reader.readAsDataURL(blob);
                     return;
@@ -197,9 +216,48 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
             }
             toast.error("No image found in clipboard");
         } catch (err) {
-            toast.error("Failed to read clipboard");
+            console.error(err);
+            toast.error("Failed to read clipboard. Try using Ctrl+V.");
         }
     };
+
+    // Global paste listener for when the tab is active
+    useEffect(() => {
+        const handlePaste = (e: ClipboardEvent) => {
+            if (!open || activeTab !== 'clipboard') return;
+
+            e.preventDefault();
+            const items = e.clipboardData?.items;
+            if (!items) return;
+
+            for (const item of Array.from(items)) {
+                if (item.type.startsWith('image/')) {
+                    const blob = item.getAsFile();
+                    if (blob) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            if (event.target?.result) {
+                                onImageSelect(event.target.result as string);
+                                onOpenChange(false);
+                                toast.success("Image pasted from clipboard");
+                            }
+                        };
+                        reader.readAsDataURL(blob);
+                        return;
+                    }
+                } else if (item.type === 'text/plain') {
+                    item.getAsString((text) => {
+                        if (text.startsWith('http://') || text.startsWith('https://')) {
+                            processUrl(text, "image");
+                        }
+                    });
+                }
+            }
+        };
+
+        window.addEventListener('paste', handlePaste);
+        return () => window.removeEventListener('paste', handlePaste);
+    }, [open, activeTab, onImageSelect, onOpenChange]);
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -383,10 +441,23 @@ function TabItem({ value, icon, label }: { value: string, icon: React.ReactNode,
     )
 }
 
-// Add EyeDropper type definition and extend MediaTrackConstraints
+// Add EyeDropper and ImageCapture type definitions and extend MediaTrackConstraints
 declare global {
     interface Window {
-        EyeDropper: any;
+        EyeDropper: new () => EyeDropper;
+        ImageCapture: new (track: MediaStreamTrack) => ImageCapture;
+    }
+
+    interface EyeDropper {
+        open(options?: { signal?: AbortSignal }): Promise<{ sRGBHex: string }>;
+    }
+
+    interface ImageCapture {
+        grabFrame(): Promise<ImageBitmap>;
+        takePhoto(photoSettings?: any): Promise<Blob>;
+        getPhotoCapabilities(): Promise<any>;
+        getPhotoSettings(): Promise<any>;
+        readonly track: MediaStreamTrack;
     }
 
     // Extend existing MediaTrackConstraints interface
