@@ -9,6 +9,7 @@ import { SocialProof } from "@/components/home/social-proof";
 import Image from "next/image";
 import { RatingBadge } from "@/components/foundations/rating-badge";
 import { Testimonials } from "@/components/home/testimonials";
+import { ColorPaletteShowcase } from "@/components/home/color-palette-showcase";
 import { motion, Variants } from "framer-motion";
 
 const containerVariants: Variants = {
@@ -82,7 +83,7 @@ export default function Home() {
                 <h3 className="text-lg text-gray-700 dark:text-gray-300 font-ranade font-medium mb-3">
                   Click on the image to pick a color...
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm md:text-base font-ranade">
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm md:text-base font-satoshi font-semibold">
                   ColorKit is a powerful, easy-to-use color palette generator built for designers, developers, and creative minds. Create stunning color combinations in seconds with a single click, or explore curated palettes crafted for perfect visual balance. Generate colors from images, test contrast and accessibility, and preview palettes on real UI layouts. Save, organize, and manage your palettes effortlessly, then export them in multiple formats for web, mobile apps, and design tools.
                   Smart. Fast. Creative — now enhanced with AI.
                 </p>
@@ -105,6 +106,7 @@ export default function Home() {
           </motion.section>
         </div>
 
+        <ColorPaletteShowcase />
         <Testimonials />
       </main>
 
