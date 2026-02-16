@@ -13,6 +13,7 @@ import { useUser, useClerk } from "@clerk/nextjs"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 import { useColorStore } from "@/hooks/use-color-store"
+import { SelectImageModal } from "@/components/color-picker/select-image-modal"
 
 export function InstantColorPicker() {
   const { isSignedIn } = useUser()
@@ -28,7 +29,7 @@ export function InstantColorPicker() {
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isExportOpen, setIsExportOpen] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isSelectImageOpen, setIsSelectImageOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -43,23 +44,21 @@ export function InstantColorPicker() {
   const rgb = hexToRgb(selectedColor) || { r: 0, g: 0, b: 0 };
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const imgSrc = event.target?.result as string;
-        setImage(imgSrc);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedColor(text);
     toast.success(`Copied ${text}`);
     setTimeout(() => setCopiedColor(null), 2000);
+  };
+
+  const handleImageSelect = (imgSrc: string) => {
+    setImage(imgSrc);
+  };
+
+  const handleColorPicked = (color: string) => {
+    setSelectedColor(color);
   };
 
   const handleColorsExtracted = useCallback((colors: string[]) => {
@@ -234,18 +233,11 @@ export function InstantColorPicker() {
                 <h3 className="text-neutral-900 dark:text-neutral-200 font-medium">Use your own image</h3>
 
                 <div className="relative">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
                   <Button
-                    onClick={() => fileInputRef.current?.click()}
+                    onClick={() => setIsSelectImageOpen(true)}
                     className="w-full bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-medium py-6 transition-colors"
                   >
-                    Use your own image
+                    Select Image or Pick Color
                   </Button>
                 </div>
 
@@ -281,6 +273,13 @@ export function InstantColorPicker() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <SelectImageModal
+        open={isSelectImageOpen}
+        onOpenChange={setIsSelectImageOpen}
+        onImageSelect={handleImageSelect}
+        onColorSelect={handleColorPicked}
+      />
 
       <ExportPaletteDialog
         open={isExportOpen}
