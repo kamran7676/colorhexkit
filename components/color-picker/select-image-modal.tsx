@@ -49,6 +49,10 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
         reader.readAsDataURL(file);
     };
 
+    const getScreenshotUrl = (url: string) => {
+        return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.isMobile=true&viewport.deviceScaleFactor=1`;
+    };
+
     const handleUrlSubmit = async (type: "website" | "image") => {
         if (!urlInput) {
             toast.error("Please enter a URL");
@@ -68,30 +72,48 @@ export function SelectImageModal({ open, onOpenChange, onImageSelect, onColorSel
                     setIsLoading(false);
                 };
                 img.onerror = () => {
-                    // Try without CORS if it fails (might work for display, but not for canvas extraction)
-                    // But for color picker we NEED canvas access.
-                    // If it fails with CORS anonymous, we can't use it for extraction.
-                    toast.error("Failed to load image. It might be blocked by CORS policy.");
-                    setIsLoading(false);
+                    // If direct load fails (CORS or other error), fallback to screenshot service
+                    // This acts as a proxy to bypass CORS for images
+                    toast.message("Direct load failed. Attempting to capture...", {
+                        description: "Using screenshot service to bypass CORS."
+                    });
+
+                    const fallbackUrl = getScreenshotUrl(urlInput);
+                    const fallbackImg = new Image();
+                    fallbackImg.crossOrigin = "Anonymous";
+                    fallbackImg.onload = () => {
+                        onImageSelect(fallbackUrl);
+                        onOpenChange(false);
+                        setIsLoading(false);
+                        toast.success("Image captured successfully");
+                    };
+                    fallbackImg.onerror = () => {
+                        toast.error("Failed to load image. Please try a different URL.");
+                        setIsLoading(false);
+                    };
+                    fallbackImg.src = fallbackUrl;
                 };
                 img.src = urlInput;
             } else {
-                // Website URL - Use thum.io for free screenshots
+                // Website URL
                 let formattedUrl = urlInput;
                 if (!formattedUrl.startsWith("http://") && !formattedUrl.startsWith("https://")) {
                     formattedUrl = "https://" + formattedUrl;
                 }
 
                 // Use microlink.io for more reliable free screenshots
-                const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(formattedUrl)}&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.isMobile=true&viewport.deviceScaleFactor=1`;
+                const screenshotUrl = getScreenshotUrl(formattedUrl);
 
                 const img = new Image();
                 img.crossOrigin = "Anonymous";
                 img.onload = () => {
-                    onImageSelect(screenshotUrl);
-                    onOpenChange(false);
-                    setIsLoading(false);
-                    toast.success("Website preview loaded");
+                    // Add a small delay for better UX
+                    setTimeout(() => {
+                        onImageSelect(screenshotUrl);
+                        onOpenChange(false);
+                        setIsLoading(false);
+                        toast.success("Website preview loaded");
+                    }, 1000);
                 };
                 img.onerror = () => {
                     // Fallback or error
