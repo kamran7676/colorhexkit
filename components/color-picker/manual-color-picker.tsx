@@ -37,7 +37,8 @@ import {
   hexToRgb,
   rgbToHex,
   rgbToHsl,
-  hslToRgb
+  hslToRgb,
+  hexToOklch
 } from "@/lib/color-utils"
 import { useColorStore } from "@/hooks/use-color-store"
 import { cn } from "@/lib/utils"
@@ -102,11 +103,20 @@ export default function ManualColorPicker() {
       if (codeFormat === 'hex') return hex
       const rgb = hexToRgb(hex)
       if (!rgb) return hex
-      if (codeFormat === 'rgb') return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+
+      if (codeFormat === 'rgba') return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`
+
       if (codeFormat === 'hsl') {
         const h = rgbToHsl(rgb.r, rgb.g, rgb.b)
         return `hsl(${h.h}, ${h.s}%, ${h.l}%)`
       }
+
+      if (codeFormat === 'oklch') {
+        const oklch = hexToOklch(hex)
+        if (!oklch) return hex
+        return `oklch(${oklch.l} ${oklch.c} ${oklch.h})`
+      }
+
       return hex // fallback
     }
 
@@ -121,7 +131,7 @@ export default function ManualColorPicker() {
       return `:root {\n${shades.map(s => `  --${variableName}-${s.label}: ${formatColor(s.hex)};`).join('\n')}\n}`
     }
     if (activeTab === 'tailwind') {
-      return `// tailwind.config.js\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: {\n        '${variableName}': {\n${shades.map(s => `          ${s.label}: '${formatColor(s.hex)}',`).join('\n')}\n        },\n      }\n    }\n  }\n}`
+      return `// tailwind.config.js\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: {\n        '${variableName}': {\n${shades.map(s => `          '${s.label}': '${formatColor(s.hex)}',`).join('\n')}\n        },\n      }\n    }\n  }\n}`
     }
     if (activeTab === 'tokens') {
       const jsonStructure = {
