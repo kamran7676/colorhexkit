@@ -60,9 +60,20 @@ export default function ManualColorPicker() {
   // Derived State
   const shades = useMemo(() => {
     const scale = generateSmartScale(color, shadeCount, contrastShift)
+
     if (namingPattern === 'numeric') {
       return scale.map((s, i) => ({ ...s, label: i + 1 }))
     }
+    if (namingPattern === 'tens') {
+      return scale.map((s, i) => ({ ...s, label: (i + 1) * 10 }))
+    }
+    if (namingPattern === 'standard') {
+      return scale.map((s, i) => {
+        const val = 50 + (900 - 50) * (i / Math.max(1, scale.length - 1))
+        return { ...s, label: Math.round(val / 10) * 10 }
+      })
+    }
+
     return scale
   }, [color, shadeCount, contrastShift, namingPattern])
 
@@ -255,8 +266,9 @@ export default function ManualColorPicker() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="standard">50, 100...950</SelectItem>
-                    <SelectItem value="numeric">1, 2...10</SelectItem>
+                    <SelectItem value="standard">50, 100...900</SelectItem>
+                    <SelectItem value="numeric">1, 2, 3...20</SelectItem>
+                    <SelectItem value="tens">10, 20, 30...200</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
