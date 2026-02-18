@@ -312,7 +312,32 @@ export default function ManualColorPicker() {
               variant="outline"
               size="sm"
               onClick={() => {
-                const svg = `<svg width="${shades.length * 100}" height="100" viewBox="0 0 ${shades.length * 100} 100" xmlns="http://www.w3.org/2000/svg">\n${shades.map((s, i) => `  <rect x="${i * 100}" y="0" width="100" height="100" fill="${s.hex}" />`).join("\n")}\n</svg>`
+                const generateSvg = () => {
+                  const width = 100
+                  const height = 120
+                  const totalWidth = shades.length * width
+
+                  const rects = shades.map((s, i) => {
+                    const rgbVal = hexToRgb(s.hex) || { r: 0, g: 0, b: 0 }
+                    const isLight = rgbToHsl(rgbVal.r, rgbVal.g, rgbVal.b).l > 50
+                    const textColor = isLight ? "#000000" : "#FFFFFF"
+                    const labelY = 50
+                    const hexY = 75
+
+                    return `
+    <g transform="translate(${i * width}, 0)">
+      <rect width="${width}" height="${height}" fill="${s.hex}" />
+      <text x="${width / 2}" y="${labelY}" fill="${textColor}" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">${s.label}</text>
+      <text x="${width / 2}" y="${hexY}" fill="${textColor}" font-family="sans-serif" font-size="12" text-anchor="middle" opacity="0.8">${s.hex}</text>
+    </g>`
+                  }).join("\n")
+
+                  return `<svg width="${totalWidth}" height="${height}" viewBox="0 0 ${totalWidth} ${height}" xmlns="http://www.w3.org/2000/svg">
+  ${rects}
+</svg>`
+                }
+
+                const svg = generateSvg()
                 navigator.clipboard.writeText(svg)
                 toast.success("SVG copied for Figma")
               }}
@@ -323,7 +348,32 @@ export default function ManualColorPicker() {
             <Button
               size="sm"
               onClick={() => {
-                const svg = `<svg width="${shades.length * 100}" height="100" viewBox="0 0 ${shades.length * 100} 100" xmlns="http://www.w3.org/2000/svg">\n${shades.map((s, i) => `  <rect x="${i * 100}" y="0" width="100" height="100" fill="${s.hex}" />`).join("\n")}\n</svg>`
+                const generateSvg = () => {
+                  const width = 100
+                  const height = 120
+                  const totalWidth = shades.length * width
+
+                  const rects = shades.map((s, i) => {
+                    const rgbVal = hexToRgb(s.hex) || { r: 0, g: 0, b: 0 }
+                    const isLight = rgbToHsl(rgbVal.r, rgbVal.g, rgbVal.b).l > 50
+                    const textColor = isLight ? "#000000" : "#FFFFFF"
+                    const labelY = 50
+                    const hexY = 75
+
+                    return `
+    <g transform="translate(${i * width}, 0)">
+      <rect width="${width}" height="${height}" fill="${s.hex}" />
+      <text x="${width / 2}" y="${labelY}" fill="${textColor}" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">${s.label}</text>
+      <text x="${width / 2}" y="${hexY}" fill="${textColor}" font-family="sans-serif" font-size="12" text-anchor="middle" opacity="0.8">${s.hex}</text>
+    </g>`
+                  }).join("\n")
+
+                  return `<svg width="${totalWidth}" height="${height}" viewBox="0 0 ${totalWidth} ${height}" xmlns="http://www.w3.org/2000/svg">
+  ${rects}
+</svg>`
+                }
+
+                const svg = generateSvg()
                 const blob = new Blob([svg], { type: "image/svg+xml" })
                 const url = URL.createObjectURL(blob)
                 const a = document.createElement("a")
