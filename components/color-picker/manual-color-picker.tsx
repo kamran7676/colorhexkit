@@ -42,6 +42,7 @@ import {
 } from "@/lib/color-utils"
 import { useColorStore } from "@/hooks/use-color-store"
 import { cn } from "@/lib/utils"
+import { CodeHighlighter } from "@/components/ui/code-highlighter"
 
 export default function ManualColorPicker() {
   const { color, setColor } = useColorStore()
@@ -458,10 +459,12 @@ export default function ManualColorPicker() {
                   {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 </Button>
               </div>
-              <div className="max-h-[400px] overflow-auto p-4 sm:p-6 custom-scrollbar">
-                <pre className="font-mono text-xs sm:text-sm leading-relaxed text-[#eee]">
-                  <code>{getCodeSnippet()}</code>
-                </pre>
+              <div className="max-h-[400px] overflow-auto p-4 sm:p-6 custom-scrollbar bg-[#1e1e1e]">
+                <CodeHighlighter
+                  code={getCodeSnippet()}
+                  language={activeTab === 'tokens' ? 'json' : activeTab === 'css' ? 'css' : 'javascript'}
+                  className="font-mono text-xs sm:text-sm leading-relaxed"
+                />
               </div>
               <div className="absolute top-0 right-0 p-2 text-[10px] font-medium text-white/30 font-mono pointer-events-none">
                     /* Generated from ColorPicker */
