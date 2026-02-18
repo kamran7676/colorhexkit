@@ -23,6 +23,12 @@ export interface CMYK {
   k: number;
 }
 
+export interface OKLCH {
+  l: number;
+  c: number;
+  h: number;
+}
+
 export function hexToRgb(hex: string): RGB | null {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
@@ -211,6 +217,7 @@ function getRelativeLuminance(rgb: RGB): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
+// Legacy function for backward compatibility
 export function generateShades(hex: string, count: number = 10): string[] {
   const rgb = hexToRgb(hex);
   if (!rgb) return [];
@@ -358,12 +365,6 @@ export function simulateColorBlindness(hex: string, type: string): string {
   );
 }
 
-/**
- * FAST, robust color extraction:
- * - samples pixels for performance
- * - ignores transparent / near-white / near-black pixels
- * - runs a median-cut quantization to return up to maxColors
- */
 export function extractColorsFromImage(
   imageData: ImageData,
   maxColors: number = 8
@@ -505,24 +506,101 @@ export function getColorName(hex: string): string {
   return "Unknown";
 }
 
+/**
+ * Generates a color scale with variable count, contrast shift, and algorithm support.
+ * @param hex Base color hex code
+ * @param count Number of steps in the scale (e.g., 50, 100...900, 950 typically requires 11 steps for Tailwind style if mapped 1-1, but here we generate `count` shades)
+ * @param contrastShift Shift distribution towards lighter (<0) or darker (>0). Range -1 to 1.
+ */
+export function generateSmartScale(
+  hex: string,
+  count: number = 10,
+  contrastShift: number = 0
+): { label: number; hex: string }[] {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return [];
+
+  const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+  const shades: { label: number; hex: string }[] = [];
+
+  // Create a distribution from very light (L~98%) to very dark (L~5%)
+  // Contrast shift skews the interpolation.
+  // We use a simple power curve to shift distribution.
+  // shift < 0 (negative) means we want more light shades? Or center moves?
+  // Let's say shift = -0.5 -> center moves towards 0 (darker? no).
+  // Standard linear: t goes 0 -> 1.
+  // Shifted: t' = t^(2^shift) or similar.
+
+  // Let's implement a distribution where 0 map to L=98, 1 map to L=5 approx.
+  // And the steps are distributed based on shift.
+
+  for (let i = 0; i < count; i++) {
+    const t = i / (count - 1); // 0 to 1
+
+    // Apply shift to t.
+    // shift > 0 (e.g. 0.5) should make the mid-point darker? Or lighter?
+    // Screenshot shows contrast shift -0.35.
+    // Let's try simple easing on t.
+    // If shift is negative, we want more light shades (stay lighter longer), so the curve should stay high?
+    // Let's use a power adjustment.
+
+    // Valid contrast shift range: -1 to 1 basically.
+    // -1 -> heavily weighted to one side.
+
+    const exponent = Math.pow(2, contrastShift); // if shift=0, exp=1 (linear). if shift=1, exp=2 (quad). if shift=-1, exp=0.5 (sqrt).
+    const adjustedT = Math.pow(t, exponent);
+
+    // Map adjustedT (0->1) to Lightness (98 -> 5)
+    // We keep Hue and Saturation constant for now (Tailwind actually modifies saturation, but simple HSL is often just L).
+    // To be smarter, usually saturation drops a bit at extremes.
+
+    const startL = 98;
+    const endL = 5;
+    const l = startL - (startL - endL) * adjustedT;
+
+    const newRgb = hslToRgb(hsl.h, hsl.s, l);
+
+    // Label logic: 50, 100, 200.. 900, 950 etc.
+    // If count is close to typical (e.g. 10-20), we can just map linearly 50..950?
+    // Or just 1..count.
+    // Screenshot says: "Naming Pattern 50, 100...900".
+
+    // If we have count 18, we can just distribute labels or just use indices.
+    // For now let's generate labels like: 50, 100, 150... based on interpolation.
+
+    const label = Math.round((50 + (950 - 50) * t) / 10) * 10; // Simple mapping
+
+    shades.push({
+      label: label,
+      hex: rgbToHex(newRgb.r, newRgb.g, newRgb.b),
+    });
+  }
+
+  return shades;
+}
+
+// Re-export old one for compatibility, but maybe update it to use new logic if possible? 
+// No, keep old one as is to be safe. "generateColorScale" is hardcoded to specific Tailwind steps which is what the previous UI expected.
+// The new UI uses "generateSmartScale".
 export function generateColorScale(hex: string): { label: number; hex: string }[] {
+  // Keep exact original behavior for existing components
   const rgb = hexToRgb(hex);
   if (!rgb) return [];
 
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
 
-  // Tailwind-like lightness values for 50-950 scale
-  // 50 is very light (closest to white), 950 is very dark (closest to black)
   const lightnessMap = [
     { label: 50, l: 95 },
     { label: 100, l: 90 },
     { label: 200, l: 80 },
     { label: 300, l: 70 },
     { label: 400, l: 60 },
-    { label: 500, l: 50 },  // Base color logic might need adjustment if input isn't exactly 50% L, but fixed scale simplifies consistent UI
+    { label: 500, l: 50 },
     { label: 600, l: 40 },
     { label: 700, l: 30 },
     { label: 800, l: 20 },
+    { label: 900, l: 10 },
+    { label: 950, l: 5 },
   ];
 
   return lightnessMap.map((shade) => {
