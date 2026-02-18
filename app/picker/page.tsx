@@ -84,6 +84,9 @@ export default function PickerPage() {
 
                 <TabsContent value="image" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
                   <ImageColorPicker />
+                  <div className="mt-12">
+                    <ColorAnalysis />
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="manual" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
@@ -92,15 +95,12 @@ export default function PickerPage() {
               </Tabs>
             </motion.div>
 
-            {/* Analysis Section */}
-            <motion.div variants={itemVariants}>
-              <ColorAnalysis />
-            </motion.div>
+            {/* Analysis Section moved to Image Tab */}
           </motion.div>
         </main>
 
         <Footer />
       </div>
-    </div>
+    </div >
   );
 }
