@@ -47,6 +47,23 @@ import { CodeHighlighter } from "@/components/ui/code-highlighter"
 export default function ManualColorPicker() {
   const { color, setColor } = useColorStore()
 
+  // Local state for hex input
+  const [localHex, setLocalHex] = useState(color)
+
+  useEffect(() => {
+    setLocalHex(color.toUpperCase())
+  }, [color])
+
+  const handleHexChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.toUpperCase()
+    setLocalHex(val)
+
+    // Validate and update if valid hex
+    if (/^#?([0-9A-F]{3}|[0-9A-F]{6})$/i.test(val)) {
+      setColor(val.startsWith('#') ? val : '#' + val)
+    }
+  }
+
   // Configuration State
   const [algorithm, setAlgorithm] = useState("tailwind")
   const [contrastShift, setContrastShift] = useState(0)
@@ -186,7 +203,15 @@ export default function ManualColorPicker() {
               <div className="flex-1 w-full space-y-5">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <h3 className="text-2xl font-bold font-mono tracking-tight">{color.toUpperCase()}</h3>
+                    <div className="relative">
+                      <Input
+                        value={localHex}
+                        onChange={handleHexChange}
+                        maxLength={7}
+                        className="text-2xl font-bold font-mono tracking-tight h-auto p-0 border-none bg-transparent focus-visible:ring-0 w-[140px] uppercase placeholder:text-muted/50 shadow-none hover:bg-transparent"
+                        placeholder="#000000"
+                      />
+                    </div>
                     <p className="text-sm text-muted-foreground font-medium flex items-center gap-2">
                       {colorName} <Badge variant="secondary" className="text-[10px] h-5">HSL</Badge>
                     </p>
