@@ -254,7 +254,7 @@ export default function PalettesPage() {
                       <Search className="w-6 h-6 text-muted-foreground" />
                     </div>
                     <p className="text-muted-foreground font-medium">
-                      No palettes found matching "{searchQuery}"
+                      No palettes found matching &quot;{searchQuery}&quot;
                     </p>
                     <Button variant="outline" onClick={() => setSearchQuery("")}>Clear Search</Button>
                   </div>

@@ -67,7 +67,7 @@ export function Testimonials() {
                             <Quote className="w-10 h-10 text-primary/20 mb-6 group-hover:text-primary/40 transition-colors" />
 
                             <p className="text-lg leading-relaxed text-foreground/80 font-ranade mb-8">
-                                "{testimonial.content}"
+                                &quot;{testimonial.content}&quot;
                             </p>
 
                             <div className="flex items-center gap-4">

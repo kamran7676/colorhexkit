@@ -492,7 +492,7 @@ export default function ManualColorPicker() {
                 />
               </div>
               <div className="absolute top-0 right-0 p-2 text-[10px] font-medium text-white/30 font-mono pointer-events-none">
-                    /* Generated from ColorPicker */
+                    {"/* Generated from ColorPicker */"}
               </div>
             </div>
           </TabsContent>
