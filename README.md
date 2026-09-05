@@ -1,8 +1,8 @@
 # ColorKit - Advanced Color Picker & Analyzer
+ColorKit is a premium, all-in-one color management platform designed to elevate your creative workflow. Whether you're extracting the perfect shade from an image, generating harmonious palettes, or ensuring your designs meet global accessibility standards, ColorKit provides a seamless, highly visual experience.
 
 ![Banner](public/colorkit-cover.png)
 
-ColorKit is a premium, all-in-one color management platform designed to elevate your creative workflow. Whether you're extracting the perfect shade from an image, generating harmonious palettes, or ensuring your designs meet global accessibility standards, ColorKit provides a seamless, highly visual experience.
 
 Built for designers, developers, and creative minds, it allows you to explore the depths of color theory, test real-time contrast, and manage your color assets with an elegant, animated interface that inspires creativity at every click.
 
