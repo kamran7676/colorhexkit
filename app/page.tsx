@@ -5,10 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { InstantColorPicker } from "@/components/home/instant-color-picker";
 import Hero from "@/components/home/hero";
 import { Services } from "@/components/home/services";
-import { SocialProof } from "@/components/home/social-proof";
 import Image from "next/image";
-import { RatingBadge } from "@/components/foundations/rating-badge";
-import { Testimonials } from "@/components/home/testimonials";
 import { ColorPaletteShowcase } from "@/components/home/color-palette-showcase";
 import { motion, Variants } from "framer-motion";
 
@@ -47,8 +44,6 @@ export default function Home() {
 
       <main className="relative z-10 flex-1">
         <Hero />
-        <SocialProof />
-
         <div className="container mx-auto px-4 pt-12 md:pt-20 pb-10">
           {/* Instant Color Picker */}
           <motion.div className="mb-12 sm:mb-16" variants={itemVariants}>
@@ -59,15 +54,11 @@ export default function Home() {
         <Services />
 
         <div className="container mx-auto px-4 pt-10 pb-20">
-          {/* Review + Info Section */}
+            {/* Product info section */}
           <motion.section
             className="w-full bg-transparent py-16 md:py-10 px-6 md:px-16 relative z-10"
             variants={itemVariants}
           >
-            <div className="flex justify-center mb-14">
-              <RatingBadge className="scale-125" />
-            </div>
-
             {/* Text + Image */}
             <motion.div
               className="max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-between md:gap-0"
@@ -107,7 +98,6 @@ export default function Home() {
         </div>
 
         <ColorPaletteShowcase />
-        <Testimonials />
       </main>
 
       <Footer />

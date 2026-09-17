@@ -61,14 +61,6 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/coming-soon"
-                  className="hover:text-foreground dark:hover:text-white transition-colors"
-                >
-                  Color Converter
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/gradients"
                   className="hover:text-foreground dark:hover:text-white transition-colors"
                 >
@@ -100,14 +92,6 @@ export function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              {/* <li>
-                <Link
-                  href="/coming-soon"
-                  className="hover:text-foreground dark:hover:text-white transition-colors"
-                >
-                  API Reference
-                </Link>
-              </li> */}
               <li>
                 <Link
                   href="/terms"
@@ -127,7 +111,7 @@ export function Footer() {
             <div className="flex gap-3">
               {[
                 { icon: Github, href: "https://github.com/kamran7676/colorhexkit" },
-                { icon: Mail, href: "mailto:kamranameer76@gmail.com" },
+                { icon: Mail, href: "mailto:[YAHAN APNA REAL EMAIL DAALO]" },
               ].map(({ icon: Icon, href }, i) => (
                 <a
                   key={i}

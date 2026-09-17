@@ -155,20 +155,6 @@ const Hero = () => {
 
             <div className="container relative z-10 px-4 flex flex-col items-center text-center">
 
-                {/* Badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="mb-6 md:mb-8"
-                >
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs font-medium text-black/80 dark:text-white/80 hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-default">
-                        New version v2.6.0
-                        <span className="text-orange-500 dark:text-orange-400">🔥</span>
-                        <ArrowRight className="w-3 h-3 text-black/50 dark:text-white/50" />
-                    </span>
-                </motion.div>
-
                 {/* Headline */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
