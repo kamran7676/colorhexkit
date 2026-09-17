@@ -16,8 +16,27 @@ import { useColorStore } from "@/hooks/use-color-store"
 import { SelectImageModal } from "@/components/color-picker/select-image-modal"
 
 export function InstantColorPicker() {
+  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    return <InstantColorPickerContent isSignedIn={false} openSignIn={() => undefined} />
+  }
+
+  return <ClerkInstantColorPicker />
+}
+
+function ClerkInstantColorPicker() {
   const { isSignedIn } = useUser()
   const clerk = useClerk()
+
+  return <InstantColorPickerContent isSignedIn={Boolean(isSignedIn)} openSignIn={() => clerk.openSignIn()} />
+}
+
+function InstantColorPickerContent({
+  isSignedIn,
+  openSignIn,
+}: {
+  isSignedIn: boolean;
+  openSignIn: () => void;
+}) {
   const { color, setColor, image, setImage, palette, setPalette } = useColorStore()
   // Use store instead of local state
   const selectedColor = color;
@@ -154,7 +173,7 @@ export function InstantColorPicker() {
                   <button
                     onClick={() => {
                       if (!isSignedIn) {
-                        clerk.openSignIn()
+                        openSignIn()
                         return
                       }
                       setIsExportOpen(true)

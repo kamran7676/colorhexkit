@@ -78,13 +78,13 @@ export default function Home() {
                 variants={itemVariants}
               >
                 <h2 className="text-3xl md:text-4xl font-bold font-clash-grotesk text-black dark:text-white mb-4">
-                  Color Kit
+                  ColorHexKit
                 </h2>
                 <h3 className="text-lg text-gray-700 dark:text-gray-300 font-ranade font-medium mb-3">
                   Click on the image to pick a color...
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm md:text-base font-satoshi font-semibold">
-                  ColorKit is a powerful, easy-to-use color palette generator built for designers, developers, and creative minds. Create stunning color combinations in seconds with a single click, or explore curated palettes crafted for perfect visual balance. Generate colors from images, test contrast and accessibility, and preview palettes on real UI layouts. Save, organize, and manage your palettes effortlessly, then export them in multiple formats for web, mobile apps, and design tools.
+                  ColorHexKit is a powerful, easy-to-use color palette generator built for designers, developers, and creative minds. Create stunning color combinations in seconds with a single click, or explore curated palettes crafted for perfect visual balance. Generate colors from images, test contrast and accessibility, and preview palettes on real UI layouts. Save, organize, and manage your palettes effortlessly, then export them in multiple formats for web, mobile apps, and design tools.
                   Smart. Fast. Creative — now enhanced with AI.
                 </p>
               </motion.div>
@@ -94,8 +94,8 @@ export default function Home() {
                 variants={itemVariants}
               >
                 <Image
-                  src="/colorkit.png"
-                  alt="ColorKit Logo"
+                  src="/colorhexkit-logo.svg"
+                  alt="ColorHexKit Logo"
                   width={335}
                   height={235}
                   className="object-contain animate-[spin_25s_linear_infinite]"

@@ -27,11 +27,11 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "ColorKit - Advanced Color Picker & Analyzer",
+  title: "ColorHexKit - Advanced Color Picker & Analyzer",
   description:
     "Pick colors from images, generate palettes, analyze accessibility, and explore color theory",
   icons: {
-    icon: "/colorkit.png",
+    icon: "/colorhexkit-logo.svg",
   },
 };
 
@@ -40,16 +40,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <ClerkProvider
-      appearance={{
-        elements: {
-          modalContent:
-            "translate-y-12 my-auto transition-all duration-500 ease-out animate-in zoom-in-95 fade-in slide-in-from-bottom-4",
-          modalBackdrop: "bg-black/50 backdrop-blur-md transition-all duration-500",
-        },
-      }}
-    >
+  const layout = (
       <html lang="en" suppressHydrationWarning>
         <head>
           {/* eslint-disable-next-line @next/next/no-css-tags */}
@@ -72,6 +63,21 @@ export default function RootLayout({
           </ThemeProvider>
         </body>
       </html>
+  );
+
+  return process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
+    <ClerkProvider
+      appearance={{
+        elements: {
+          modalContent:
+            "translate-y-12 my-auto transition-all duration-500 ease-out animate-in zoom-in-95 fade-in slide-in-from-bottom-4",
+          modalBackdrop: "bg-black/50 backdrop-blur-md transition-all duration-500",
+        },
+      }}
+    >
+      {layout}
     </ClerkProvider>
+  ) : (
+    layout
   );
 }

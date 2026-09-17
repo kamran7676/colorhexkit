@@ -48,8 +48,8 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full animate-pulse" />
               <Image
-                src="/colorkit.png"
-                alt="ColorKit Logo"
+                src="/colorhexkit-logo.svg"
+                alt="ColorHexKit Logo"
                 width={100}
                 height={100}
                 className="relative object-contain w-20 h-20 sm:w-24 sm:h-24 animate-[spin_30s_linear_infinite]"
@@ -60,7 +60,7 @@ export default function AboutPage() {
 
           <div className="space-y-4 max-w-3xl mx-auto">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-clash-grotesk tracking-tight text-foreground dark:text-white">
-              About <span className="text-primary">ColorKit</span>
+              About <span className="text-primary">ColorHexKit</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground font-satoshi leading-relaxed max-w-2xl mx-auto">
               A simple yet powerful platform that helps you explore, extract, and analyze colors from images or palettes.
@@ -78,7 +78,7 @@ export default function AboutPage() {
                 More Than Just a Picker
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed font-display">
-                ColorKit was born from the need for a modern, fast, and privacy-focused color tool.
+                ColorHexKit was born from the need for a modern, fast, and privacy-focused color tool.
                 We noticed that most color pickers were either cluttered with ads or lacked precision.
                 So, we built something better—a tool designed for creators, developers, and artists who care about aesthetics and accessibility.
               </p>
@@ -142,7 +142,7 @@ export default function AboutPage() {
                 <h2 className="text-2xl font-bold font-clash-grotesk">Our Mission</h2>
                 <p className="text-muted-foreground leading-relaxed">
                   To make color exploration effortless and intelligent. We believe that the right tools should get out of your way and let your creativity flow.
-                  <span className="text-foreground font-semibold"> ColorKit</span> empowers you to visualize and perfect every shade with confidence.
+                  <span className="text-foreground font-semibold"> ColorHexKit</span> empowers you to visualize and perfect every shade with confidence.
                 </p>
               </section>
 
@@ -152,7 +152,7 @@ export default function AboutPage() {
                 </div>
                 <h2 className="text-2xl font-bold font-clash-grotesk">Join the Community</h2>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  We welcome contributors! Whether its reporting a bug, suggesting a feature, or fixing a typo, your help makes ColorKit better for everyone.
+                  We welcome contributors! Whether its reporting a bug, suggesting a feature, or fixing a typo, your help makes ColorHexKit better for everyone.
                 </p>
                 <Button
                   asChild
@@ -160,7 +160,7 @@ export default function AboutPage() {
                   className="rounded-full border-white/10 hover:bg-foreground/5"
                 >
                   <Link
-                    href="https://github.com/codewithdhruba01/ColorPicker"
+                    href="https://github.com/KamranAmeer/colorhexkit"
                     target="_blank"
                     className="gap-2"
                   >

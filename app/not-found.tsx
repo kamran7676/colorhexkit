@@ -71,7 +71,7 @@ export default function NotFound() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        © {new Date().getFullYear()} ColorKit — All Rights Reserved
+        © {new Date().getFullYear()} ColorHexKit — All Rights Reserved
       </motion.div>
 
       {/* Static animation keyframes */}

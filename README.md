@@ -1,7 +1,7 @@
-# ColorKit - Advanced Color Picker & Analyzer
-ColorKit is a premium, all-in-one color management platform designed to elevate your creative workflow. Whether you're extracting the perfect shade from an image, generating harmonious palettes, or ensuring your designs meet global accessibility standards, ColorKit provides a seamless, highly visual experience.
+# ColorHexKit - Advanced Color Picker & Analyzer
+ColorHexKit is a premium, all-in-one color management platform designed to elevate your creative workflow. Whether you're extracting the perfect shade from an image, generating harmonious palettes, or ensuring your designs meet global accessibility standards, ColorHexKit provides a seamless, highly visual experience.
 
-![Banner](public/colorkit-cover.png)
+![Banner](public/colorhexkit-cover.svg)
 
 
 Built for designers, developers, and creative minds, it allows you to explore the depths of color theory, test real-time contrast, and manage your color assets with an elegant, animated interface that inspires creativity at every click.
@@ -67,8 +67,8 @@ Built for designers, developers, and creative minds, it allows you to explore th
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/codewithdhruba01/ColorPicker.git
-cd ColorPicker
+git clone https://github.com/KamranAmeer/colorhexkit.git
+cd colorhexkit
 ```
 
 2. Install dependencies:
@@ -93,7 +93,7 @@ npm start
 
 ## Reflections on the Project
 
-Analyzing **ColorKit** reveals a meticulously crafted application that stands out for several reasons:
+Analyzing **ColorHexKit** reveals a meticulously crafted application that stands out for several reasons:
 
 1. **Focus on Accessibility**: Beyond just picking colors, the inclusion of a robust Contrast Checker and Color Blindness Simulator demonstrates a deep understanding of modern web development standards. It encourages designers to create inclusive digital experiences.
 2. **Exceptional User Experience**: The integration of `framer-motion` for micro-interactions and `lenis` for smooth scrolling creates a highly polished, "premium" feel. The glassmorphism UI and animated gradient backgrounds make the app visually stunning without compromising performance.
@@ -101,7 +101,7 @@ Analyzing **ColorKit** reveals a meticulously crafted application that stands ou
 4. **Comprehensive Tooling**: Integrating advanced algorithms like K-means clustering for image color extraction directly in the browser using the HTML5 Canvas API showcases a high level of technical competency.
 5. **Modern Authentication & Data**: The groundwork laid with `Clerk` and `Supabase` indicates that the app is built to be a fully-fledged SaaS product, capable of saving user preferences, palettes, and historical data.
 
-ColorKit is not just a utility; it is a comprehensive suite for color management that perfectly balances aesthetic appeal with technical depth.
+ColorHexKit is not just a utility; it is a comprehensive suite for color management that perfectly balances aesthetic appeal with technical depth.
 
 ## Contributing
 
@@ -117,8 +117,9 @@ This project is licensed under the [MIT License](LICENSE).
    
 ⭐ If you find this project useful, please give it a star!
 
-**Built with ❤️ by [Dhrubaraj Pati](https://codewithdhruba.vercel.app/) for developers**
+**Made by Kamran Ameer for developers**
 
-[Website](https://codewithdhruba.vercel.app/) • [GitHub](https://github.com/codewithdhruba01) • [Twitter](https://x.com/codewithdhruba)
+Suggested repository: `colorhexkit`
+Suggested description: `ColorHexKit is an advanced color picker, palette generator, and accessibility toolkit for designers and developers.`
 
 </div>

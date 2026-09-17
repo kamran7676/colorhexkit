@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">ColorHexKit logo</title>
+  <desc id="desc">A geometric hexagon containing three color swatches</desc>
+  <rect width="256" height="256" rx="48" fill="#111827"/>
+  <path d="M128 30 207 76v92l-79 46-79-46V76z" fill="#f97316"/>
+  <path d="m128 30 79 46-79 46-79-46z" fill="#facc15"/>
+  <path d="m128 122 79-46v92l-79 46z" fill="#22d3ee"/>
+  <path d="m128 122-79-46v92l79 46z" fill="#f43f5e"/>
+  <path d="M92 108h72v40H92z" fill="#fff" opacity=".92"/>
+  <text x="128" y="135" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="18" font-weight="700">HEX</text>
+</svg>

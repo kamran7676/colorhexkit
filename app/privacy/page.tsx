@@ -63,7 +63,7 @@ export default function PrivacyPage() {
                   Our Privacy Commitment
                 </h2>
                 <p className="text-lg text-muted-foreground font-poppins font-semibold leading-relaxed">
-                  At ColorKit, we take your privacy seriously. We believe in transparency and giving you control over your data.
+                  At ColorHexKit, we take your privacy seriously. We believe in transparency and giving you control over your data.
                   Unlike many other tools, <span className="text-foreground font-medium">we dont collect or store your personal data.</span>
                   Your creativity stays yours.
                 </p>
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
                     <Eye className="w-5 h-5 text-blue-400" /> Information You Provide
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    ColorKit works entirely in your browser. When you upload an image, it is processed locally on your device. It is <strong className="text-foreground">never</strong> uploaded to our servers.
+                    ColorHexKit works entirely in your browser. When you upload an image, it is processed locally on your device. It is <strong className="text-foreground">never</strong> uploaded to our servers.
                   </p>
                 </div>
 
@@ -162,7 +162,7 @@ export default function PrivacyPage() {
                     <h3 className="text-xl font-bold font-excon">Still have questions?</h3>
                     <p className="text-muted-foreground text-sm">We are happy to answer any questions about our privacy practices.</p>
                   </div>
-                  <a href="mailto:support@colorkit.com" className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity flex items-center gap-2 whitespace-nowrap">
+                    <a href="mailto:support@colorhexkit.com" className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity flex items-center gap-2 whitespace-nowrap">
                     <Mail className="w-4 h-4" /> Contact Support
                   </a>
                 </div>

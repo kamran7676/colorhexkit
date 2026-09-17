@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Twitter, Mail, Globe, Coffee } from "lucide-react";
+import { Github, Mail, Coffee } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -13,19 +13,19 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Image
-                src="/colorkit.png"
-                alt="ColorKit Logo"
+                src="/colorhexkit-logo.svg"
+                alt="ColorHexKit Logo"
                 width={37}
                 height={37}
                 className="rounded-lg object-contain"
                 priority
               />
               <span className="font-bold text-lg text-foreground dark:text-white font-clash-grotesk">
-                ColorKit
+                ColorHexKit
               </span>
             </div>
             <p className="text-sm text-muted-foreground dark:text-white/60 leading-relaxed">
-              Made for designers and visual creators, Color Kit helps you explore inspiring colors and effortlessly create beautiful, balanced palettes for any project.
+              Made for designers and visual creators, ColorHexKit helps you explore inspiring colors and effortlessly create beautiful, balanced palettes for any project.
             </p>
           </div>
 
@@ -126,9 +126,7 @@ export function Footer() {
             </h3>
             <div className="flex gap-3">
               {[
-                { icon: Github, href: "https://github.com/codewithdhruba01" },
-                { icon: Twitter, href: "https://x.com/codewithdhruba" },
-                { icon: Globe, href: "https://codewithdhruba.vercel.app/" },
+                { icon: Github, href: "https://github.com/KamranAmeer/colorhexkit" },
                 { icon: Mail, href: "mailto:example@email.com" },
               ].map(({ icon: Icon, href }, i) => (
                 <a
@@ -146,18 +144,18 @@ export function Footer() {
         {/* COPYRIGHT */}
         <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col  justify-between items-center">
           <p className="text-neutral-400 text-sm mb-4 md:mb-0 font-satoshi">
-            &copy; {new Date().getFullYear()} ColorKit. All rights reserved.{" "}
+            &copy; {new Date().getFullYear()} ColorHexKit. All rights reserved.{" "}
           </p>
           <p className="text-neutral-400 text-sm flex items-center font-satoshi">
-            Design & Developed by{" "}
+            Made by{" "}
             <Coffee className="w-4 h-4 mx-1 text-[#fcda03]" />
             <a
-              href="https://codewithdhruba.vercel.app/"
+              href="https://github.com/KamranAmeer"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground dark:text-white hover:none active:no-underline transition-colors"
             >
-              Dhrubaraj Pati
+              Kamran Ameer
             </a>
           </p>
         </div>

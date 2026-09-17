@@ -61,7 +61,7 @@ export default function TermsPage() {
                 <Scale className="w-6 h-6 text-primary" /> Acceptance of Terms
               </h2>
               <p className="text-lg text-muted-foreground font-satoshi font-semibold leading-relaxed">
-                By accessing and using ColorKit, you accept and agree to be bound by these terms. If you do not agree, please do not use our service.
+                By accessing and using ColorHexKit, you accept and agree to be bound by these terms. If you do not agree, please do not use our service.
               </p>
             </section>
 
@@ -150,7 +150,7 @@ export default function TermsPage() {
                   <h3 className="text-xl font-bold font-excon">Questions about Terms?</h3>
                   <p className="text-muted-foreground text-sm">Our support team is here to help clarify any points.</p>
                 </div>
-                <a href="mailto:legal@colorkit.com" className="px-6 py-3 rounded-xl bg-foreground text-background font-medium hover:opacity-90 transition-opacity flex items-center gap-2 whitespace-nowrap">
+                <a href="mailto:legal@colorhexkit.com" className="px-6 py-3 rounded-xl bg-foreground text-background font-medium hover:opacity-90 transition-opacity flex items-center gap-2 whitespace-nowrap">
                   <Mail className="w-4 h-4" /> Contact Legal
                 </a>
               </div>
@@ -159,7 +159,7 @@ export default function TermsPage() {
           </Card>
 
           <p className="text-center text-sm text-muted-foreground font-satoshi font-semibold">
-            By using ColorKit, you acknowledge that you have read and agreed to these Terms.
+            By using ColorHexKit, you acknowledge that you have read and agreed to these Terms.
           </p>
         </div>
       </motion.main>

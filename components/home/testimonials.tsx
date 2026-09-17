@@ -12,7 +12,7 @@ const TESTIMONIALS = [
         avatar: "/Avater/kari-rasmussen.jpg"
     },
     {
-        content: "I used to struggle with color theory, but ColorKit makes theming my apps effortless. The AI suggestions are better than what I could come up with.",
+        content: "I used to struggle with color theory, but ColorHexKit makes theming my apps effortless. The AI suggestions are better than what I could come up with.",
         author: "David Chen",
         role: "Frontend Developer",
         avatar: "/Avater/jonathan-kelly.jpg"
@@ -50,7 +50,7 @@ export function Testimonials() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-muted-foreground text-lg max-w-xl mx-auto font-ranade"
                     >
-                        Join thousands of creators who trust ColorKit for their daily creative needs.
+                        Join thousands of creators who trust ColorHexKit for their daily creative needs.
                     </motion.p>
                 </div>
 
