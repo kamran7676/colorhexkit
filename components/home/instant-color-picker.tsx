@@ -9,34 +9,16 @@ import { hexToRgb, rgbToHex, rgbToHsl, extractColorsFromImage, generateTints } f
 import { toast } from "sonner"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { ExportPaletteDialog } from "@/components/home/export-palette-dialog"
-import { useUser, useClerk } from "@clerk/nextjs"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 import { useColorStore } from "@/hooks/use-color-store"
 import { SelectImageModal } from "@/components/color-picker/select-image-modal"
 
 export function InstantColorPicker() {
-  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
-    return <InstantColorPickerContent isSignedIn={false} openSignIn={() => undefined} />
-  }
-
-  return <ClerkInstantColorPicker />
+  return <InstantColorPickerContent />
 }
 
-function ClerkInstantColorPicker() {
-  const { isSignedIn } = useUser()
-  const clerk = useClerk()
-
-  return <InstantColorPickerContent isSignedIn={Boolean(isSignedIn)} openSignIn={() => clerk.openSignIn()} />
-}
-
-function InstantColorPickerContent({
-  isSignedIn,
-  openSignIn,
-}: {
-  isSignedIn: boolean;
-  openSignIn: () => void;
-}) {
+function InstantColorPickerContent() {
   const { color, setColor, image, setImage, palette, setPalette } = useColorStore()
   // Use store instead of local state
   const selectedColor = color;
@@ -172,10 +154,6 @@ function InstantColorPickerContent({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => {
-                      if (!isSignedIn) {
-                        openSignIn()
-                        return
-                      }
                       setIsExportOpen(true)
                     }}
                     className="w-10 h-10 rounded-full border border-neutral-200 dark:border-white/10 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors" title="Download Palette">

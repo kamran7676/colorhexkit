@@ -52,7 +52,6 @@ Built for designers, developers, and creative minds, it allows you to explore th
 - **Animations**: Framer Motion
 - **State Management**: Zustand for clean, global state handling
 - **Authentication**: Clerk
-- **Database/Backend**: Supabase
 - **Icons**: Lucide React
 - **Notifications**: Sonner (Toast notifications)
 - **Smooth Scrolling**: Lenis
@@ -99,7 +98,6 @@ Analyzing **ColorHexKit** reveals a meticulously crafted application that stands
 2. **Exceptional User Experience**: The integration of `framer-motion` for micro-interactions and `lenis` for smooth scrolling creates a highly polished, "premium" feel. The glassmorphism UI and animated gradient backgrounds make the app visually stunning without compromising performance.
 3. **Solid Technical Foundation**: Utilizing Next.js App Router along with TypeScript and Zustand ensures that the application is scalable, maintainable, and type-safe. The modular component structure (`components/color-picker`, `components/home`, etc.) reflects excellent separation of concerns.
 4. **Comprehensive Tooling**: Integrating advanced algorithms like K-means clustering for image color extraction directly in the browser using the HTML5 Canvas API showcases a high level of technical competency.
-5. **Modern Authentication & Data**: The groundwork laid with `Clerk` and `Supabase` indicates that the app is built to be a fully-fledged SaaS product, capable of saving user preferences, palettes, and historical data.
 
 ColorHexKit is not just a utility; it is a comprehensive suite for color management that perfectly balances aesthetic appeal with technical depth.
 

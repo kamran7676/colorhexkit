@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter, Poppins, Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { ClerkProvider } from "@clerk/nextjs";
 import SmoothScrolling from "@/components/smooth-scrolling";
 
 const inter = Inter({
@@ -65,19 +64,5 @@ export default function RootLayout({
       </html>
   );
 
-  return process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
-    <ClerkProvider
-      appearance={{
-        elements: {
-          modalContent:
-            "translate-y-12 my-auto transition-all duration-500 ease-out animate-in zoom-in-95 fade-in slide-in-from-bottom-4",
-          modalBackdrop: "bg-black/50 backdrop-blur-md transition-all duration-500",
-        },
-      }}
-    >
-      {layout}
-    </ClerkProvider>
-  ) : (
-    layout
-  );
+  return layout;
 }
