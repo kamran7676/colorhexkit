@@ -100,14 +100,14 @@ export function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/coming-soon"
                   className="hover:text-foreground dark:hover:text-white transition-colors"
                 >
                   API Reference
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/terms"
@@ -126,8 +126,8 @@ export function Footer() {
             </h3>
             <div className="flex gap-3">
               {[
-                { icon: Github, href: "https://github.com/KamranAmeer/colorhexkit" },
-                { icon: Mail, href: "mailto:example@email.com" },
+                { icon: Github, href: "https://github.com/kamran7676/colorhexkit" },
+                { icon: Mail, href: "mailto:kamranameer76@gmail.com" },
               ].map(({ icon: Icon, href }, i) => (
                 <a
                   key={i}
@@ -150,7 +150,7 @@ export function Footer() {
             Made by{" "}
             <Coffee className="w-4 h-4 mx-1 text-[#fcda03]" />
             <a
-              href="https://github.com/KamranAmeer"
+              href="https://github.com/kamran7676"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground dark:text-white hover:none active:no-underline transition-colors"
