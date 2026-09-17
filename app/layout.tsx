@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Poppins, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import SmoothScrolling from "@/components/smooth-scrolling";
@@ -60,6 +61,7 @@ export default function RootLayout({
             <SmoothScrolling>{children}</SmoothScrolling>
             <Toaster />
           </ThemeProvider>
+          <Analytics />
         </body>
       </html>
   );
