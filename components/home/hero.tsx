@@ -146,11 +146,11 @@ const Hero = () => {
     };
 
     return (
-        <section ref={containerRef} className="relative w-full overflow-hidden bg-white dark:bg-black text-black dark:text-white min-h-screen flex flex-col items-center pt-24 md:pt-32 pb-20 transition-colors duration-300">
+        <section ref={containerRef} className="relative w-full overflow-hidden bg-neutral-50 dark:bg-black text-black dark:text-white min-h-screen flex flex-col items-center pt-24 md:pt-32 pb-20 transition-colors duration-300">
             {/* Background Gradients/Glows - Adjusted for both modes */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-[-10%] left-[20%] w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-purple-500/10 dark:bg-purple-900/20 rounded-full blur-[80px] md:blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-blob will-change-transform" style={{ transform: 'translate3d(0,0,0)' }} />
-                <div className="absolute bottom-[-10%] right-[10%] w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-blue-500/10 dark:bg-blue-900/10 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob animation-delay-2000 will-change-transform" style={{ transform: 'translate3d(0,0,0)' }} />
+                <div className="absolute top-[-10%] left-[20%] w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-purple-500/20 dark:bg-purple-900/20 rounded-full blur-[80px] md:blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-blob will-change-transform" style={{ transform: 'translate3d(0,0,0)' }} />
+                <div className="absolute bottom-[-10%] right-[10%] w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-blue-500/15 dark:bg-blue-900/10 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob animation-delay-2000 will-change-transform" style={{ transform: 'translate3d(0,0,0)' }} />
             </div>
 
             <div className="container relative z-10 px-4 flex flex-col items-center text-center">

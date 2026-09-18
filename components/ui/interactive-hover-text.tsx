@@ -33,7 +33,7 @@ const InteractiveHoverText = ({ text, className }: InteractiveHoverTextProps) =>
                         return (
                             <motion.span
                                 key={charIndex}
-                                className="inline-block cursor-default text-neutral-950 dark:text-white"
+                                className="inline-block cursor-default"
                                 whileHover={{
                                     scale: 1.3,
                                     y: -5,
