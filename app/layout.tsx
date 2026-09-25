@@ -26,12 +26,18 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://colorhexkit.vercel.app';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "ColorHexKit - Advanced Color Picker & Analyzer",
   description:
     "Pick colors from images, generate palettes, analyze accessibility, and explore color theory",
   icons: {
     icon: "/colorhexkit-logo.svg",
+  },
+  alternates: {
+    canonical: '/',
   },
 };
 
