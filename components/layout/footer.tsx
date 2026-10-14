@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Mail, Coffee } from "lucide-react";
+import { Github, Coffee } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -111,7 +111,6 @@ export function Footer() {
             <div className="flex gap-3">
               {[
                 { icon: Github, href: "https://github.com/kamran7676/colorhexkit" },
-                { icon: Mail, href: "mailto:[YAHAN APNA REAL EMAIL DAALO]" },
               ].map(({ icon: Icon, href }, i) => (
                 <a
                   key={i}

@@ -163,7 +163,7 @@ const Hero = () => {
                     className="mb-6 max-w-4xl mx-auto"
                 >
                     <InteractiveHoverText
-                        text="Make beautiful websites regardless of your color experience"
+                        text="Color palette generator for beautiful websites"
                         className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] text-neutral-950 dark:text-white"
                     />
                 </motion.div>

@@ -242,7 +242,10 @@ export default function ImageColorPicker() {
                   <img
                     ref={imageRef}
                     src={image}
-                    alt="Uploaded"
+                    alt="Uploaded image for color sampling"
+                    width={1200}
+                    height={800}
+                    loading="lazy"
                     className="w-full h-auto max-h-[500px] object-contain bg-[url('/checkboard.svg')] bg-repeat pointer-events-none"
                   />
 

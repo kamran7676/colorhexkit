@@ -27,6 +27,7 @@ import { motion } from "framer-motion";
 
 import { colorPalettes, categories, type ColorPalette } from "@/lib/palettes";
 import { toast } from "sonner";
+import { SeoContent } from "@/components/seo-content";
 
 export default function PalettesPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -328,6 +329,7 @@ export default function PalettesPage() {
             </div>
           </div>
         </motion.main>
+        <SeoContent page="palettes" />
         <Footer />
       </div>
 

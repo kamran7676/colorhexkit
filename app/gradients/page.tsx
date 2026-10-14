@@ -20,6 +20,7 @@ import { gradients } from "@/lib/gradients";
 import { toast } from "sonner";
 import Link from "next/link";
 import { PopoverPicker } from "@/components/color-picker/popover-picker";
+import { SeoContent } from "@/components/seo-content";
 
 export default function GradientsPage() {
   const [colors, setColors] = useState(["#EEDDFF", "#9966FF"]);
@@ -296,6 +297,7 @@ export default function GradientsPage() {
           </div>
         </motion.main>
 
+        <SeoContent page="gradients" />
         <Footer />
       </div>
 

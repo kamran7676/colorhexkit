@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Copy, Check, Heart } from "lucide-react";
 import { gradients, categories } from "@/lib/gradients";
 import { toast } from "sonner";
+import { SeoContent } from "@/components/seo-content";
 
 export default function AllGradientsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -65,7 +66,7 @@ export default function AllGradientsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
-                Gradients
+                CSS Gradient Library
               </motion.h1>
               <motion.p
                 className="text-sm sm:text-base text-muted-foreground dark:text-white/60"
@@ -241,6 +242,7 @@ export default function AllGradientsPage() {
           </motion.div>
         </main>
 
+        <SeoContent page="library" />
         <Footer />
       </div>
     </div>

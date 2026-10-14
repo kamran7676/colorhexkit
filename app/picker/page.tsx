@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ImageColorPicker from "@/components/color-picker/image-color-picker";
 import ManualColorPicker from "@/components/color-picker/manual-color-picker";
 import ColorAnalysis from "@/components/color-picker/color-analysis";
+import { SeoContent } from "@/components/seo-content";
 
 export default function PickerPage() {
   const containerVariants: Variants = {
@@ -52,9 +53,9 @@ export default function PickerPage() {
               className="text-center space-y-4 max-w-2xl mx-auto"
               variants={itemVariants}
             >
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-clash-grotesk tracking-tight text-foreground dark:text-white">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-clash-grotesk tracking-tight text-foreground dark:text-white">
                 Color Picker <span className="text-muted-foreground">&</span> Analyzer
-              </h2>
+              </h1>
               <p className="text-base sm:text-lg text-muted-foreground font-ranade dark:text-white/60 leading-relaxed">
                 Extract colors from images or pick manually, then analyze and explore palettes with our professional-grade tools.
               </p>
@@ -98,6 +99,8 @@ export default function PickerPage() {
             {/* Analysis Section moved to Image Tab */}
           </motion.div>
         </main>
+
+        <SeoContent page="picker" />
 
         <Footer />
       </div>

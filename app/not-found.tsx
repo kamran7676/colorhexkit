@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -34,8 +33,8 @@ export default function NotFound() {
           {/* Screen */}
           <div className="w-[90%] h-[70%] bg-black rounded-md overflow-hidden border-2 border-gray-800 relative">
             <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,white_0px,white_1px,black_1px,black_2px)] opacity-90 animate-static" />
-            <p className="absolute inset-0 flex items-center justify-center text-white text-xs sm:text-lg font-mono bg-black/60 z-10">
-              Coming Soon...
+            <p className="absolute inset-0 flex items-center justify-center text-white text-xs sm:text-lg font-mono bg-black/60 z-10" aria-label="Page not found">
+              404
             </p>
           </div>
 
@@ -56,7 +55,7 @@ export default function NotFound() {
         className="z-10 mt-10"
       >
         <p className="text-[#a09f9f] text-lg sm:text-xl font-medium">
-          Oops! This page is under construction{" "}
+          Sorry, this page could not be found.
         </p>
         <Link
           href="/"

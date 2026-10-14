@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { AlertCircle, CheckCircle, Copy, RotateCcw } from "lucide-react";
 import { hexToRgb, getContrastRatio } from "@/lib/color-utils";
 import { toast } from "sonner";
+import { SeoContent } from "@/components/seo-content";
 
 export default function ContrastCheckerPage() {
   const [foregroundColor, setForegroundColor] = useState("#000000");
@@ -280,6 +281,7 @@ export default function ContrastCheckerPage() {
             ></motion.div>
           </div>
         </main>
+        <SeoContent page="contrast" />
 
         {/* Footer stays static */}
         <Footer />
