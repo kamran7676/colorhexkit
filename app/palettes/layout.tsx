@@ -1,11 +1,6 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo-metadata';
 
-export const metadata: Metadata = {
-  title: 'Color Palettes - ColorHexKit',
-  description:
-    'Explore curated color palettes for your next project. Browse by category, search by name or hex code, and copy colors instantly.',
-  alternates: { canonical: '/palettes' },
-};
+export const metadata = pageMetadata('Color Palettes - ColorHexKit', 'Explore curated color palettes for your next project. Browse by category, search by name or hex code, and copy colors instantly.', '/palettes');
 
 export default function PalettesLayout({ children }: { children: React.ReactNode }) {
   return children;

@@ -1,11 +1,6 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo-metadata';
 
-export const metadata: Metadata = {
-  title: 'Contrast Checker - ColorHexKit',
-  description:
-    'Check color contrast ratios against WCAG AA and AAA standards. Ensure your text colors meet accessibility requirements.',
-  alternates: { canonical: '/contrast-checker' },
-};
+export const metadata = pageMetadata('Contrast Checker - ColorHexKit', 'Check color contrast ratios against WCAG AA and AAA standards. Ensure your text colors meet accessibility requirements for web content.', '/contrast-checker');
 
 export default function ContrastCheckerLayout({ children }: { children: React.ReactNode }) {
   return children;

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111827"/><stop offset="1" stop-color="#312e81"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="920" cy="310" r="210" fill="#8b5cf6" opacity=".3"/><circle cx="960" cy="290" r="130" fill="#06b6d4" opacity=".55"/>
+  <text x="90" y="250" fill="#fff" font-family="Arial,sans-serif" font-size="76" font-weight="700">ColorHexKit</text>
+  <text x="94" y="325" fill="#d1d5db" font-family="Arial,sans-serif" font-size="34">Pick colors. Build palettes. Check contrast.</text>
+  <rect x="95" y="390" width="110" height="18" rx="9" fill="#f43f5e"/><rect x="215" y="390" width="110" height="18" rx="9" fill="#f59e0b"/><rect x="335" y="390" width="110" height="18" rx="9" fill="#10b981"/><rect x="455" y="390" width="110" height="18" rx="9" fill="#3b82f6"/>
+</svg>
