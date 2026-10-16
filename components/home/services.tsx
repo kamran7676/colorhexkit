@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const services = [
     {
-        title: "Palette Generator",
-        description: "Generate perfect color palettes instantly with our AI-powered tools.",
+        title: "Color Palettes",
+        description: "Browse curated color palettes and copy HEX, RGB and CSS values.",
         icon: Palette,
         href: "/palettes",
         color: "text-purple-500",
@@ -84,7 +84,7 @@ export function Services() {
                             variants={itemVariants}
                             className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto font-satoshi font-semibold"
                         >
-                            A suite of powerful tools designed to help you create, explore, and manage colors like a pro.
+                            Free browser-based tools to pick, explore, and check colors.
                         </motion.p>
                     </div>
 

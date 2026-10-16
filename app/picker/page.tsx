@@ -8,6 +8,7 @@ import ImageColorPicker from "@/components/color-picker/image-color-picker";
 import ManualColorPicker from "@/components/color-picker/manual-color-picker";
 import ColorAnalysis from "@/components/color-picker/color-analysis";
 import { SeoContent } from "@/components/seo-content";
+import { ExploreLinks } from "@/components/explore-links";
 
 export default function PickerPage() {
   const containerVariants: Variants = {
@@ -100,6 +101,7 @@ export default function PickerPage() {
           </motion.div>
         </main>
 
+        <ExploreLinks />
         <SeoContent page="picker" />
 
         <Footer />

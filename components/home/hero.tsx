@@ -175,7 +175,7 @@ const Hero = () => {
                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                     className="text-base md:text-xl text-neutral-600 dark:text-white/60 max-w-2xl mx-auto mb-10 px-4"
                 >
-                    Design the perfect color palette or discover endless inspiration from thousands of curated color schemes.
+                    Extract a palette from any image, browse curated palettes and CSS gradients, and check color contrast in your browser.
                 </motion.p>
 
                 {/* Action Buttons */}

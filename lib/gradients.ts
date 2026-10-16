@@ -1,3 +1,5 @@
+import { slugify } from "@/lib/utils";
+
 export interface Gradient {
   id: string;
   name: string;
@@ -358,13 +360,6 @@ export const gradients: Gradient[] = [
     category: "Purple",
   },
   {
-    id: "51",
-    name: "Neon Life",
-    colors: ["#B3FFAB", "#12FFF7"],
-    css: "linear-gradient(135deg, #B3FFAB 0%, #12FFF7 100%)",
-    category: "Green",
-  },
-  {
     id: "52",
     name: "Cherry Pop",
     colors: ["#EB3349", "#F45C43"],
@@ -421,20 +416,6 @@ export const gradients: Gradient[] = [
     category: "Orange",
   },
   {
-    id: "60",
-    name: "Emerald Dream",
-    colors: ["#348F50", "#56B4D3"],
-    css: "linear-gradient(135deg, #348F50 0%, #56B4D3 100%)",
-    category: "Green",
-  },
-  {
-    id: "61",
-    name: "Rose Mist",
-    colors: ["#FBD3E9", "#BB377D"],
-    css: "linear-gradient(135deg, #FBD3E9 0%, #BB377D 100%)",
-    category: "Pink",
-  },
-  {
     id: "62",
     name: "Deep Forest",
     colors: ["#5A3F37", "#2C7744"],
@@ -454,13 +435,6 @@ export const gradients: Gradient[] = [
     colors: ["#EECDA3", "#EF629F"],
     css: "linear-gradient(135deg, #EECDA3 0%, #EF629F 100%)",
     category: "Pink",
-  },
-  {
-    id: "65",
-    name: "Winter Sky",
-    colors: ["#83A4D4", "#B6FBFF"],
-    css: "linear-gradient(135deg, #83A4D4 0%, #B6FBFF 100%)",
-    category: "Blue",
   },
   {
     id: "66",
@@ -519,13 +493,6 @@ export const gradients: Gradient[] = [
     category: "Yellow",
   },
   {
-    id: "74",
-    name: "Bubblegum Pop",
-    colors: ["#FF9A9E", "#FAD0C4"],
-    css: "linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%)",
-    category: "Pink",
-  },
-  {
     id: "75",
     name: "Ocean Deep",
     colors: ["#2C3E50", "#00A8CC"],
@@ -552,13 +519,6 @@ export const gradients: Gradient[] = [
     colors: ["#B993D6", "#8CA6DB"],
     css: "linear-gradient(135deg, #B993D6 0%, #8CA6DB 100%)",
     category: "Purple",
-  },
-  {
-    id: "79",
-    name: "Forest Bloom",
-    colors: ["#5A3F37", "#2C7744"],
-    css: "linear-gradient(135deg, #5A3F37 0%, #2C7744 100%)",
-    category: "Green",
   },
   {
     id: "80",
@@ -603,46 +563,11 @@ export const gradients: Gradient[] = [
     category: "Orange",
   },
   {
-    id: "86",
-    name: "Aurora Dream",
-    colors: ["#00C6FF", "#0072FF"],
-    css: "linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)",
-    category: "Blue",
-  },
-  {
-    id: "87",
-    name: "Cherry Blush",
-    colors: ["#FF9A9E", "#FAD0C4"],
-    css: "linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%)",
-    category: "Pink",
-  },
-  {
-    id: "88",
-    name: "Autumn Blaze",
-    colors: ["#FFB75E", "#ED8F03"],
-    css: "linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%)",
-    category: "Orange",
-  },
-  {
-    id: "89",
-    name: "Frozen Ocean",
-    colors: ["#83A4D4", "#B6FBFF"],
-    css: "linear-gradient(135deg, #83A4D4 0%, #B6FBFF 100%)",
-    category: "Blue",
-  },
-  {
     id: "90",
     name: "Violet Flame",
     colors: ["#DA22FF", "#9733EE"],
     css: "linear-gradient(135deg, #DA22FF 0%, #9733EE 100%)",
     category: "Purple",
-  },
-  {
-    id: "91",
-    name: "Sunset Drift",
-    colors: ["#F2994A", "#F2C94C"],
-    css: "linear-gradient(135deg, #F2994A 0%, #F2C94C 100%)",
-    category: "Yellow",
   },
   {
     id: "92",
@@ -660,7 +585,7 @@ export const gradients: Gradient[] = [
   },
   {
     id: "94",
-    name: "Golden Hour",
+    name: "Peach Glow",
     colors: ["#F6D365", "#FDA085"],
     css: "linear-gradient(135deg, #F6D365 0%, #FDA085 100%)",
     category: "Yellow",
@@ -671,13 +596,6 @@ export const gradients: Gradient[] = [
     colors: ["#89F7FE", "#66A6FF"],
     css: "linear-gradient(135deg, #89F7FE 0%, #66A6FF 100%)",
     category: "Blue",
-  },
-  {
-    id: "96",
-    name: "Morning Bloom",
-    colors: ["#FAD0C4", "#FFD1FF"],
-    css: "linear-gradient(135deg, #FAD0C4 0%, #FFD1FF 100%)",
-    category: "Pink",
   },
   {
     id: "97",
@@ -700,13 +618,6 @@ export const gradients: Gradient[] = [
     css: "linear-gradient(135deg, #373B44 0%, #4286F4 100%)",
     category: "Blue",
   },
-  {
-    id: "100",
-    name: "Peachy Dream",
-    colors: ["#FAD0C4", "#FFD1FF"],
-    css: "linear-gradient(135deg, #FAD0C4 0%, #FFD1FF 100%)",
-    category: "Peach",
-  },
 ];
 
 export const categories = [
@@ -720,3 +631,7 @@ export const categories = [
   "Yellow",
   "Dark",
 ];
+
+export const gradientSlug = (gradient: Gradient) => slugify(gradient.name);
+
+export const getGradientBySlug = (slug: string) => gradients.find((gradient) => gradientSlug(gradient) === slug);

@@ -9,6 +9,7 @@ import Image from "next/image";
 import { ColorPaletteShowcase } from "@/components/home/color-palette-showcase";
 import { motion, Variants } from "framer-motion";
 import { SeoContent } from "@/components/seo-content";
+import { ExploreLinks } from "@/components/explore-links";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -76,8 +77,7 @@ export default function Home() {
                   Click on the image to pick a color...
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm md:text-base font-satoshi font-semibold">
-                  ColorHexKit is a powerful, easy-to-use color palette generator built for designers, developers, and creative minds. Create stunning color combinations in seconds with a single click, or explore curated palettes crafted for perfect visual balance. Generate colors from images, test contrast and accessibility, and preview palettes on real UI layouts. Save, organize, and manage your palettes effortlessly, then export them in multiple formats for web, mobile apps, and design tools.
-                  Smart, fast color tools for creative work.
+                  ColorHexKit is a free set of browser-based color tools for designers and developers. Extract a palette from an image and export it as CSS, JSON, SVG or PNG, browse curated palettes and CSS gradients, look up HEX, RGB and HSL values, and check text contrast against WCAG thresholds. Images are processed locally in your browser.
                 </p>
               </motion.div>
 
@@ -99,6 +99,7 @@ export default function Home() {
         </div>
 
         <ColorPaletteShowcase />
+        <ExploreLinks />
         <SeoContent page="home" />
       </main>
 

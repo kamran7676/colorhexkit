@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -9,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, Copy, Check, Heart } from "lucide-react";
-import { gradients, categories } from "@/lib/gradients";
+import { gradients, categories, gradientSlug } from "@/lib/gradients";
 import { toast } from "sonner";
 import { SeoContent } from "@/components/seo-content";
 
@@ -74,7 +75,9 @@ export default function AllGradientsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
               >
-                {filteredGradients.length} beautiful gradient combinations
+                {filteredGradients.length === gradients.length
+                  ? `${gradients.length} CSS gradients`
+                  : `Showing ${filteredGradients.length} of ${gradients.length} CSS gradients`}
               </motion.p>
             </div>
 
@@ -208,7 +211,9 @@ export default function AllGradientsPage() {
                       <div className="p-4 space-y-2">
                         <div className="flex items-start justify-between gap-2 flex-wrap">
                           <h3 className="font-semibold text-sm sm:text-base text-left">
-                            {gradient.name}
+                            <Link href={`/gradients/${gradientSlug(gradient)}`} className="underline-offset-4 hover:underline">
+                              {gradient.name}
+                            </Link>
                           </h3>
                           <Badge
                             variant="secondary"

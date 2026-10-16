@@ -59,11 +59,19 @@ const pages = {
       "Use the search and category controls to narrow the collection when you have a particular style in mind. Compare the colors and transition in the preview, then open the gradient maker to change the angle, type, or individual stops. Copy the resulting CSS into your project and check it with the actual element dimensions. A gradient that looks balanced in a wide preview can feel different in a narrow mobile component, so review responsive layouts before release.",
       "If you are choosing a gradient for text or controls, review contrast at every point where the content overlays the color. For complex backgrounds, a plain color contrast calculation may not represent the true result across the entire element. Consider placing a solid or semi-opaque surface behind small text. You can find coordinating base colors in the palette library or sample an existing image with the color picker. After choosing colors, the contrast checker can help assess solid pairs used in the design. The gradient collection is meant to speed up inspiration and experimentation; refine each example to match your own design tokens, accessibility needs, and browser support targets."
     ],
-    faqs: ["Can I copy a gradient from the library? Open an example in the gradient maker to customize and copy its CSS.", "How do I find a particular style? Use the library search or category filters to narrow the examples.", "Can I edit library colors? Yes. Continue to the gradient maker and adjust the gradient settings.", "Do example gradients guarantee readable text? No. Check readability and contrast in the final layout."]
+    faqs: ["Can I copy a gradient from the library? Yes. Click a preview to copy its CSS, or open the gradient's page for CSS and Tailwind code.", "How do I find a particular style? Use the library search or category filters to narrow the examples.", "Can I edit library colors? Yes. Continue to the gradient maker and adjust the gradient settings.", "Do example gradients guarantee readable text? No. Check readability and contrast in the final layout."]
   }
 } as const;
 
 type SeoPage = keyof typeof pages;
+
+// Pages that are interactive tools get WebApplication structured data.
+const webApps: Partial<Record<SeoPage, string>> = {
+  home: "ColorHexKit Color Palette Generator",
+  picker: "ColorHexKit Color Picker",
+  gradients: "ColorHexKit CSS Gradient Maker",
+  contrast: "ColorHexKit Contrast Checker",
+};
 
 export function SeoContent({ page }: { page: SeoPage }) {
   const item = pages[page];
@@ -72,8 +80,10 @@ export function SeoContent({ page }: { page: SeoPage }) {
   const url = `${baseUrl}/${path}`;
   const breadcrumb = [{ "@type": "ListItem", position: 1, name: "Home", item: `${baseUrl}/` }, { "@type": "ListItem", position: 2, name: item.title, item: url }];
   const faq = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: item.faqs.map((entry) => { const [question, answer] = entry.split("?"); return { "@type": "Question", name: `${question}?`, acceptedAnswer: { "@type": "Answer", text: answer.trim() } }; }) };
+  const appName = webApps[page];
+  const webApp = appName && { "@context": "https://schema.org", "@type": "WebApplication", name: appName, url, description: item.intro, applicationCategory: "DesignApplication", operatingSystem: "Any (web browser)", browserRequirements: "Requires JavaScript", isAccessibleForFree: true, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } };
   return <section className="container mx-auto max-w-5xl px-4 py-12 text-muted-foreground" aria-labelledby={`${page}-guide`}>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: breadcrumb }, faq]) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: breadcrumb }, faq, ...(webApp ? [webApp] : [])]) }} />
     <h2 id={`${page}-guide`} className="mb-4 text-2xl font-semibold text-foreground">{item.title}</h2>
     <p className="mb-4 leading-7">{item.intro}</p>
     {item.paragraphs.map((paragraph) => <p key={paragraph.slice(0, 40)} className="mb-4 leading-7">{paragraph}</p>)}
@@ -85,6 +95,7 @@ export function SeoContent({ page }: { page: SeoPage }) {
       <Link className="underline underline-offset-4" href="/gradients">Gradient maker</Link>
       <Link className="underline underline-offset-4" href="/gradients/all">Gradient library</Link>
       <Link className="underline underline-offset-4" href="/contrast-checker">Contrast checker</Link>
+      <Link className="underline underline-offset-4" href="/color">HEX color codes</Link>
     </nav>
   </section>;
 }

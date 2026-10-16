@@ -3,39 +3,20 @@
 import { useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Search,
-  Heart,
-  Copy,
-  Check,
-  Sparkles,
-  TrendingUp,
-  Shuffle,
-} from "lucide-react";
+import { Search, Heart, Sparkles } from "lucide-react";
 
 import { motion } from "framer-motion";
 
-import { colorPalettes, categories, type ColorPalette } from "@/lib/palettes";
+import { colorPalettes, categories, paletteSlug } from "@/lib/palettes";
 import { toast } from "sonner";
 import { SeoContent } from "@/components/seo-content";
 
 export default function PalettesPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("new");
-  const [selectedPalette, setSelectedPalette] = useState<ColorPalette | null>(
-    null,
-  );
-  const [copiedColor, setCopiedColor] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [likedPalettes, setLikedPalettes] = useState<Set<string>>(new Set());
 
   const filteredPalettes = colorPalettes.filter((palette) => {
@@ -45,22 +26,12 @@ export default function PalettesPage() {
         color.toLowerCase().includes(searchQuery.toLowerCase()),
       );
 
-    if (selectedCategory === "new") return matchesSearch;
-    if (selectedCategory === "popular")
-      return matchesSearch && palette.likes > 300;
-    if (selectedCategory === "random") return matchesSearch;
+    if (selectedCategory === "all") return matchesSearch;
     if (selectedCategory === "collection")
       return matchesSearch && likedPalettes.has(palette.id);
 
     return matchesSearch && palette.category.toLowerCase() === selectedCategory;
   });
-
-  const copyToClipboard = (color: string) => {
-    navigator.clipboard.writeText(color);
-    setCopiedColor(color);
-    toast.success(`Copied ${color}`);
-    setTimeout(() => setCopiedColor(null), 2000);
-  };
 
   const toggleLike = (paletteId: string) => {
     setLikedPalettes((prev) => {
@@ -77,9 +48,7 @@ export default function PalettesPage() {
   };
 
   const getCategoryIcon = (categoryId: string) => {
-    if (categoryId === "new") return <Sparkles className="w-4 h-4" />;
-    if (categoryId === "popular") return <TrendingUp className="w-4 h-4" />;
-    if (categoryId === "random") return <Shuffle className="w-4 h-4" />;
+    if (categoryId === "all") return <Sparkles className="w-4 h-4" />;
     if (categoryId === "collection") return <Heart className="w-4 h-4" />;
     return null;
   };
@@ -109,7 +78,7 @@ export default function PalettesPage() {
                 Color Palettes
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground font-ranade max-w-2xl mx-auto leading-relaxed">
-                Explore thousands of beautiful color combinations for your next project, curated for rapid inspiration.
+                Browse {colorPalettes.length} curated color palettes. Open any palette for HEX and RGB values, CSS variables and copy buttons.
               </p>
 
               {/* Search bar */}
@@ -268,10 +237,7 @@ export default function PalettesPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: idx * 0.05 }}
                       >
-                        <div
-                          className="group relative bg-card border border-border/50 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-                          onClick={() => setSelectedPalette(palette)}
-                        >
+                        <div className="group relative bg-card border border-border/50 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
                           <div className="grid grid-cols-4 h-40 group-hover:h-44 transition-all duration-300">
                             {palette.colors.map((color, index) => (
                               <div
@@ -287,7 +253,10 @@ export default function PalettesPage() {
                           <div className="p-4 space-y-3">
                             <div className="flex items-start justify-between gap-2">
                               <h3 className="font-semibold text-base font-clash-grotesk truncate pr-2 text-foreground">
-                                {palette.name}
+                                {/* Stretched link: the whole card opens the palette page */}
+                                <Link href={`/palettes/${paletteSlug(palette)}`} className="after:absolute after:inset-0">
+                                  {palette.name}
+                                </Link>
                               </h3>
                               <Badge
                                 variant="secondary"
@@ -298,12 +267,11 @@ export default function PalettesPage() {
                             </div>
 
                             <div className="flex items-center justify-between text-sm text-muted-foreground pt-1 border-t border-border/50">
+                              <span className="font-mono text-xs opacity-70 truncate">{palette.colors.join(" ")}</span>
                               <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleLike(palette.id);
-                                }}
-                                className="flex items-center gap-1.5 hover:text-destructive transition-colors group/like"
+                                onClick={() => toggleLike(palette.id)}
+                                aria-label={likedPalettes.has(palette.id) ? "Remove from collection" : "Add to collection"}
+                                className="relative z-10 flex items-center gap-1.5 hover:text-destructive transition-colors group/like"
                               >
                                 <Heart
                                   className={`w-4 h-4 transition-transform group-hover/like:scale-110 ${likedPalettes.has(palette.id)
@@ -311,13 +279,7 @@ export default function PalettesPage() {
                                     : ""
                                     }`}
                                 />
-                                <span className="font-medium font-mono">
-                                  {palette.likes +
-                                    (likedPalettes.has(palette.id) ? 1 : 0)}
-                                </span>
                               </button>
-
-                              <span className="text-xs font-medium opacity-60">{palette.timeAgo}</span>
                             </div>
                           </div>
                         </div>
@@ -333,108 +295,6 @@ export default function PalettesPage() {
         <Footer />
       </div>
 
-      {/* DIALOG */}
-      <Dialog
-        open={!!selectedPalette}
-        onOpenChange={() => setSelectedPalette(null)}
-      >
-        <DialogContent className="max-w-sm sm:max-w-2xl p-0 overflow-hidden border-none bg-background/95 backdrop-blur-2xl shadow-2xl border border-border/50">
-          {selectedPalette && (
-            <div className="flex flex-col">
-              <div className="p-6 pb-2">
-                <DialogHeader>
-                  <DialogTitle className="text-xl sm:text-2xl font-clash-grotesk flex items-center justify-between text-foreground">
-                    <span>{selectedPalette.name}</span>
-                    <Badge variant="outline" className="text-xs font-normal font-sans opacity-60 border-border text-muted-foreground">{selectedPalette.category}</Badge>
-                  </DialogTitle>
-                </DialogHeader>
-              </div>
-
-              <div className="grid grid-cols-4 h-48 sm:h-56">
-                {selectedPalette.colors.map((color, index) => (
-                  <div
-                    key={index}
-                    className="relative group cursor-pointer"
-                    style={{ backgroundColor: color }}
-                    onClick={() => copyToClipboard(color)}
-                  >
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 backdrop-blur-[1px]">
-                      <span className="text-white font-mono font-medium text-sm tracking-widest">{color.toUpperCase()}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="p-6 space-y-6 bg-muted/30">
-                <div className="space-y-3">
-                  <h3 className="font-semibold text-sm sm:text-base text-muted-foreground uppercase tracking-wider">
-                    Full Palette
-                  </h3>
-                  {selectedPalette.colors.map((color, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-4 p-3 rounded-xl border border-border/50 bg-background/50 hover:bg-background transition-colors group"
-                    >
-                      <div
-                        className="w-12 h-12 rounded-lg shadow-sm flex-shrink-0 ring-1 ring-inset ring-black/10 dark:ring-white/10"
-                        style={{ backgroundColor: color }}
-                      />
-                      <div className="flex-1">
-                        <p className="font-mono font-bold text-sm sm:text-base tracking-wide text-foreground">
-                          {color.toUpperCase()}
-                        </p>
-                        <p className="text-xs text-muted-foreground font-mono mt-0.5">
-                          rgb({parseInt(color.slice(1, 3), 16)},
-                          {parseInt(color.slice(3, 5), 16)},
-                          {parseInt(color.slice(5, 7), 16)})
-                        </p>
-                      </div>
-
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => copyToClipboard(color)}
-                        className="opacity-50 group-hover:opacity-100 hover:bg-muted"
-                      >
-                        {copiedColor === color ? (
-                          <Check className="w-4 h-4 text-green-500" />
-                        ) : (
-                          <Copy className="w-4 h-4 text-muted-foreground" />
-                        )}
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-border/50">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <button
-                      onClick={() => toggleLike(selectedPalette.id)}
-                      className="flex items-center gap-2 hover:text-destructive transition-colors"
-                    >
-                      <Heart className={`w-5 h-5 ${likedPalettes.has(selectedPalette.id) ? "fill-red-500 text-red-500" : ""}`} />
-                      <span className="font-medium">{selectedPalette.likes + (likedPalettes.has(selectedPalette.id) ? 1 : 0)} Likes</span>
-                    </button>
-                    <span>•</span>
-                    <span>{selectedPalette.timeAgo}</span>
-                  </div>
-
-                  <Button
-                    className="w-full sm:w-auto font-sans rounded-full px-6"
-                    onClick={() => {
-                      const allColors = selectedPalette.colors.join(", ");
-                      navigator.clipboard.writeText(allColors);
-                      toast.success("All colors copied!");
-                    }}
-                  >
-                    Copy All Colors
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
